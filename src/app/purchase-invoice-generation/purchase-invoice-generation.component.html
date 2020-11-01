@@ -1,0 +1,124 @@
+<div class="row">
+	<div class="col-md-2" style="text-align: center;">
+		<h5><b>New Sales Invoice</b></h5>
+    <p class="text-info">#{{invoiceId}}</p>
+	</div>
+  <div class="col-md-4" style="text-align: center;  ">
+
+  </div>
+  <div class="col-md-2" style="text-align: center;  ">
+    <input class="form-control form-control-sm custom-input-style" [(ngModel)]="invoiceDate" type="date"><br>
+    <textarea class="form-control custom-input-style" placeholder="Address" rows="1"></textarea>
+  </div>
+  <div class="col-md-2" style="text-align: center;  ">
+		<input class="form-control form-control-sm custom-input-style" type="text" placeholder="Customer Name.."><br>
+    <input class="form-control form-control-sm custom-input-style" type="text" placeholder="Phone..">
+	</div>
+  <div class="col-md-2" style="text-align: center;  ">
+		<input class="form-control form-control-sm custom-input-style" type="text" placeholder="GST No."><br>
+    <input class="form-control form-control-sm custom-input-style" type="text" placeholder="Email..">
+  </div>
+</div><br>
+<!-- <div class="row">
+	<div class="col-md-3" style="text-align: center;  ">
+		<input class="form-control form-control-sm custom-input-style" type="text" placeholder="Customer Name..">
+	</div>
+	<div class="col-md-3" style="text-align: center; ">
+		<input class="form-control form-control-sm custom-input-style" type="text" placeholder="Address..">
+  </div>
+	<div class="col-md-2" style="text-align: center;  ">
+		<input class="form-control form-control-sm custom-input-style" type="text" placeholder="GST No.">
+  </div>
+</div><br> -->
+<!-- <div class="row">
+	<div class="col-md-3" style="text-align: center;  ">
+		<input class="form-control form-control-sm custom-input-style" type="text" placeholder="Phone..">
+	</div>
+	<div class="col-md-3" style="text-align: center; ">
+		<input class="form-control form-control-sm custom-input-style" type="text" placeholder="Email..">
+  </div>
+</div> -->
+		<div class="row list-custom-headings bg-info">
+			<div class="col-md-1">#</div>
+			<div class="col-md-2"><small><b>Batch No.</b></small></div>
+			<div class="col-md-2"><small><b>Product</b></small></div>
+			<div class="col-md-1"><small><b>Qty</b></small></div>
+      <div class="col-md-1"><small><b>Price</b></small></div>
+			<div class="col-md-1"><small><b>CGST</b></small></div>
+      <div class="col-md-1"><small><b>SGST</b></small></div>
+      <div class="col-md-1"><small><b>Disc</b></small></div>
+			<div class="col-md-1"><small><b>Total</b></small></div>
+		</div>
+		<hr>
+    <div *ngFor="let product of products; let i = index">
+		<div id="{{i}}">
+			<div class="row" style="margin-top: 2%; text-align: center;">
+				<div class="col-md-1"><input class="form-check-input" type="checkbox" value="" id="defaultCheck1"></div>
+					<div class="col-md-2">
+            <small><input class="form-control form-control-sm custom-input-style" type="text" [(ngModel)]="product.batchNo"  (ngModelChange)="getFilteredList(product.batchNo)" placeholder="Batch Number.." (blur)="toggleListDisplay(0,i,product)" (focus)="toggleListDisplay(1,i,product)" (keyup)="onKeyPress($event,i,product)"></small>
+            <span class="custom-right-dropdown custom-side-nav card" [hidden]="!batchDropDowns[i]">
+              <small *ngFor="let batch of filteredBatchNos; let j = index">
+                <a class="text-info custom-right-dropdown-content nav-link" (click)="selectItem(batch,i,product)" [ngClass]="{'select-item-style':j==selectedIndex}">{{batch}}</a>
+              </small>
+            </span>
+          </div>
+					<div class="col-md-2">
+            <small><input class="form-control form-control-sm custom-input-style" type="text" [(ngModel)]="product.productName" placeholder="Product Name.."></small>
+          </div>
+					<div class="col-md-1">
+            <small><input class="form-control form-control-sm custom-input-style" type="text" [(ngModel)]="product.qty" placeholder="Qty.."></small>
+          </div>
+          <div class="col-md-1">
+            <small><input class="form-control form-control-sm custom-input-style" type="text" [(ngModel)]="product.price" placeholder="Price.."></small>
+          </div>
+					<div class="col-md-1">
+						<small><input class="form-control form-control-sm custom-input-style" type="text" [(ngModel)]="product.cgst" placeholder="CGST"></small>
+					</div>
+					<div class="col-md-1 ">
+						<small><input class="form-control form-control-sm custom-input-style" type="text" [(ngModel)]="product.sgst" placeholder="SGST"></small>
+					</div>
+          <div class="col-md-1 ">
+						<small><input class="form-control form-control-sm custom-input-style" type="text" [(ngModel)]="product.disc" placeholder="Total"></small>
+					</div>
+          <div class="col-md-1 ">
+						<small><input class="form-control form-control-sm custom-input-style" type="text" [(ngModel)]="product.total" placeholder="Total"></small>
+					</div>
+          <div class="col-md-1">
+             <small> <span class="badge badge-pill badge-info" *ngIf="products.length>1" (click)="removeProductFromInvoice(product.batchNo)"><i class='fas fa-times'></i></span></small>
+					</div>
+				</div>
+			</div>
+			<hr>
+    </div>
+    <div class="row">
+    <div class="col-md-11 text-info" style="bottom: 0; width: 100%;">
+      <!-- <nav aria-label="Page navigation example">
+        <ul class="pagination pagination-sm">
+          <li class="page-item" (click)="changePageContent(currPage-1)">
+            <a class="page-link" aria-label="Previous">
+              <span aria-hidden="true">&laquo;</span>
+              <span class="sr-only">Previous</span>
+            </a>
+          </li>
+          <li *ngFor="let page of pages" class="page-item" (click)="changePageContent(page)">
+            <a class="page-link" [ngClass]="page==currPage?'active-pagination':''">{{page}}</a>
+          </li>
+          <li class="page-item" (click)="changePageContent(currPage+1)">
+            <a class="page-link" aria-label="Next">
+              <span aria-hidden="true">&raquo;</span>
+              <span class="sr-only">Next</span>
+            </a>
+          </li>
+        </ul>
+      </nav> -->
+    </div>
+    <div class="col-md-1 text-info">
+      <span class="badge badge-pill bg-info"><a (click)="addProductIntoInvoice()" style="text-decoration: none; color: white;">Add More </a></span>
+    </div>
+    </div>
+    <div class="col-md-12" style="bottom: 0; width: 100%;">
+      <h5>
+        <span class="badge badge-pill bg-info"><a (click)="save()" style="text-decoration: none; color: white;">Save </a></span>&nbsp;
+        <span class="badge badge-pill bg-info"><a href="#" style="text-decoration: none; color: white;">Delete</a></span>
+      </h5>
+    </div>

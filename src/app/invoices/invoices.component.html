@@ -1,0 +1,118 @@
+<div class="row">
+	<div class="col-md-2" style="text-align: center;">
+		<h5><b>Invoices</b></h5>
+	</div>
+	<div class="col-md-2" style="text-align: center;  ">
+		<select class="form-control form-control-sm custom-input-style">
+      <option>Select Payment Status</option>
+      <option *ngFor="let payStatus of paymentsStatuses">{{payStatus}}</option>
+    </select>
+	</div>
+	<div class="col-md-2" style="text-align: center; ">
+		<input class="form-control form-control-sm custom-input-style" type="date">
+  </div>
+		<div class="col-md-3" style="text-align: center;  ">
+			<input class="form-control form-control-sm custom-input-style" type="text" [(ngModel)]="quickSearch" placeholder="Quick search">
+    </div>
+			<div class="col-md-2" style="text-align: right;">
+				<h5><span class="badge badge-pill bg-info"><a routerLink="/New-Sales-Invoice" style="text-decoration: none; color: white;">+ New Invoice</a></span>
+				</h5>
+			</div>
+			<div class="col-md-1" style="text-align: right;">
+				<span class="badge badge-pill badge-info"><i class='fas fa-info'></i></span>
+				<span class="badge badge-pill badge-info"><i class='fas fa-filter'></i></span>
+			</div>
+		</div>
+		<div class="row list-custom-headings bg-info">
+			<div class="col-md-1">#</div>
+			<div class="col-md-2">Invoice Id</div>
+			<div class="col-md-2">Date</div>
+			<div class="col-md-2">Customer</div>
+			<div class="col-md-1">GST</div>
+			<div class="col-md-1">Total</div>
+			<div class="col-md-1">Paid</div>
+      <div class="col-md-1">Unpaid</div>
+		</div>
+		<hr>
+
+    <div *ngFor="let invoice of pageOfInvoices ; let i = index">
+		<div id="{{i}}">
+			<div class="row" style="margin-top: 2%; text-align: center;">
+				<div class="col-md-1"><input class="form-check-input" type="checkbox" value="" id="defaultCheck1"></div>
+					<div class="col-md-2">{{invoice.invoiceId}}</div>
+					<div class="col-md-2">{{invoice.invoiceDate | date}}</div>
+					<div class="col-md-2">{{invoice.customerName}}</div>
+          <div class="col-md-1"><p><i class='fas fa-rupee-sign'></i>{{invoice.gst}}</p></div>
+					<div class="col-md-1">
+						<p><i class='fas fa-rupee-sign'></i>{{invoice.total}}</p>
+					</div>
+					<div class="col-md-1 ">
+						<input class="form-control form-control-sm custom-input-style" type="text" [(ngModel)]="invoice.paid">
+					</div>
+          <div class="col-md-1 ">
+						<input class="form-control form-control-sm custom-input-style" type="text" [(ngModel)]="invoice.total - invoice.paid">
+					</div>
+					<div class="col-md-1">
+						<span class="badge badge-pill badge-info"><i class='fas fa-angle-down' id="{{i}}_down" (click)="expandProduct(i)"></i><i class='fas fa-angle-up' id="{{i}}_up" (click)="restoreProduct(i)" style="display: none;"></i></span>
+					</div>
+				</div>
+				<div id="{{i}}_content" class="row" style="margin-top: 2%; display: none; margin: 0% 1%;">
+					<table class="table">
+						<thead class="bg-info">
+							<th>#</th>
+							<th>Batch No.</th>
+              <th>Product</th>
+              <th>Exp Date</th>
+							<th>Price</th>
+							<th>Qty</th>
+              <th>CGST</th>
+              <th>SGST</th>
+							<th>Disc</th>
+							<th>Total</th>
+						</thead>
+						<tbody>
+							<tr *ngFor="let product of invoice.productsDet">
+								<td><input class="form-check-input" type="checkbox" value="" id="defaultCheck1"></td>
+								<td>{{product.batchNo}}</td>
+                <td>{{product.productName}}</td>
+                <td>{{product.expDate | date}}</td>
+								<td><i class='fas fa-rupee-sign'></i>{{product.price}}</td>
+								<td>x {{product.quantity}}</td>
+                <td>{{product.gst}}</td>
+                <td>{{product.gst}}</td>
+								<td style="color: red;">{{product.discount}}%</td>
+								<td><i class='fas fa-rupee-sign'></i>{{product.total}}</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+			<hr>
+    </div>
+    <div class="col-md-12 text-info" style="bottom: 0; width: 100%;">
+      <nav aria-label="Page navigation example">
+        <ul class="pagination pagination-sm">
+          <li class="page-item" (click)="changePageContent(currPage-1)">
+            <a class="page-link" aria-label="Previous">
+              <span aria-hidden="true">&laquo;</span>
+              <span class="sr-only">Previous</span>
+            </a>
+          </li>
+          <li *ngFor="let page of pages" class="page-item" (click)="changePageContent(page)">
+            <a class="page-link" [ngClass]="page==currPage?'active-pagination':''">{{page}}</a>
+          </li>
+          <li class="page-item" (click)="changePageContent(currPage+1)">
+            <a class="page-link" aria-label="Next">
+              <span aria-hidden="true">&raquo;</span>
+              <span class="sr-only">Next</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+    <div class="col-md-12" style="bottom: 0; width: 100%;">
+      <h5>
+        <span class="badge badge-pill bg-info"><a href="#" style="text-decoration: none; color: white;">Save </a></span>&nbsp;
+        <span class="badge badge-pill bg-info"><a (click)="confirmDelete()" style="text-decoration: none; color: white;">Delete</a></span>
+      </h5>
+    </div>

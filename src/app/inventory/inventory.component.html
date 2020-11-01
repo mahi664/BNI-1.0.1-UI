@@ -1,0 +1,125 @@
+<div class="row">
+    <div class="col-md-2" style="text-align: center;">
+        <h5><b>Inventory</b></h5>
+    </div>
+    <div class="col-md-2" style="text-align: center;  ">
+        <select class="form-control form-control-sm custom-input-style">
+            <option>Category</option>
+        </select>
+    </div>
+    <div class="col-md-2" style="text-align: center;">
+        <select class="form-control form-control-sm custom-input-style">
+            <option>Product</option>
+        </select>
+    </div>
+    <div class="col-md-3" style="text-align: center;  ">
+        <input class="form-control form-control-sm custom-input-style" type="text" placeholder="Quick Search">
+    </div>
+    <div class="col-md-2" style="text-align: right;">
+        <h5><span class="badge badge-pill bg-info"><a href="#" style="text-decoration: none; color: white;">+ Add
+                    product</a></span>
+        </h5>
+    </div>
+    <div class="col-md-1" style="text-align: right;">
+        <span class="badge badge-pill badge-info"><i class='fas fa-info'></i></span>
+        <span class="badge badge-pill badge-info"><i class='fas fa-filter'></i></span>
+    </div>
+</div>
+
+<div class="row list-custom-headings bg-info">
+    <div class="col-md-1">#</div>
+    <div class="col-md-3">Product Name</div>
+    <div class="col-md-3">Description</div>
+    <div class="col-md-2">Category</div>
+    <div class="col-md-2">Stock</div>
+</div>
+<hr>
+
+<div *ngFor="let product of pageOfProducts; let i = index">
+
+    <div id="{{i}}">
+        <div class="row" style="margin-top: 2%; text-align: center;">
+            <div class="col-md-1"><input class="form-check-input" type="checkbox" value="" id="defaultCheck1"></div>
+            <div class="col-md-3"> <input class="form-control form-control-sm custom-input-style" type="text"
+                    [(ngModel)]="product.productName"></div>
+            <div class="col-md-3"><input class="form-control form-control-sm custom-input-style" type="text"
+                    [(ngModel)]="product.description"></div>
+            <div class="col-md-2">
+                <select class="form-control form-control-sm custom-input-style" [(ngModel)]="product.category">
+                    <option *ngFor="let category of categories" value="{{category}}">{{category}}</option>
+                </select>
+            </div>
+            <div class="col-md-2">
+                <div class="progress">
+                    <div class="progress-bar progress-bar-striped progress-bar-animated bg-info" role="progressbar"
+                        style="width: {{product.avilStockPercent}}%" aria-valuenow="25" aria-valuemin="0"
+                        aria-valuemax="100">{{product.inStock}}/{{product.totalQty}}</div>
+                </div>
+            </div>
+            <div class="col-md-1">
+                <span class="badge badge-pill badge-info"><i class='fas fa-angle-down' id="{{i}}_down"
+                        (click)="expandProduct(i)"></i><i class='fas fa-angle-up' id="{{i}}_up"
+                        (click)="restoreProduct(i)" style="display: none;"></i></span>
+            </div>
+        </div>
+
+        <div id="{{i}}_content" class="row" style=" display: none; margin: 2% 1%;">
+            <table class="table">
+                <thead class="bg-info">
+                    <th>#</th>
+                    <th>Batch No.</th>
+                    <th>Price</th>
+                    <th>Cost</th>
+                    <th>GST</th>
+                    <th>Qty</th>
+                    <th>In Stock</th>
+                    <th>Exp Date</th>
+                    <th>Mfg Date</th>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let inventory of product.inventories; let i=index">
+                        <td>{{i+1}}</td>
+                        <td>{{inventory.batchNo}}</td>
+                        <td><i class='fas fa-rupee-sign'></i>{{inventory.sellingPrice}}</td>
+                        <td><i class='fas fa-rupee-sign'></i>{{inventory.purchasedCost}}</td>
+                        <td>{{inventory.gst}}%</td>
+                        <td>{{inventory.totalQty}}</td>
+                        <td>{{inventory.inStock}}</td>
+                        <td>{{inventory.expDate | date}}</td>
+                        <td>{{inventory.mfgDate | date}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <hr>
+    </div>
+</div>
+<div class="col-md-12 text-info" style="bottom: 0; width: 100%;">
+    <nav aria-label="Page navigation example">
+        <ul class="pagination pagination-sm">
+            <li class="page-item" (click)="changePageContent(currPage-1)">
+                <a class="page-link" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                    <span class="sr-only">Previous</span>
+                </a>
+            </li>
+            <li *ngFor="let page of pages" class="page-item" (click)="changePageContent(page)">
+                <a class="page-link" [ngClass]="page==currPage?'active-pagination':''">{{page}}</a>
+            </li>
+            <li class="page-item" (click)="changePageContent(currPage+1)">
+                <a class="page-link" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                    <span class="sr-only">Next</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</div>
+<div class="col-md-12" style="bottom: 0; width: 100%;">
+    <h5>
+        <span class="badge badge-pill bg-info"><a href="#" style="text-decoration: none; color: white;">Save
+            </a></span>&nbsp;
+        <span class="badge badge-pill bg-info"><a href="#"
+                style="text-decoration: none; color: white;">Delete</a></span>
+    </h5>
+</div>
