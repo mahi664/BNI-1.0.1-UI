@@ -1,0 +1,90 @@
+<div class="row">
+    <div class="col-md-2" style="text-align: center;">
+        <h5><b>Category</b></h5>
+    </div>
+    <div class="col-md-2" style="text-align: center;  ">
+        <!-- <select class="form-control form-control-sm custom-input-style">
+          <option>{{message}}</option>
+        </select> -->
+    </div>
+    <div class="col-md-2" style="text-align: center;">
+        <!-- <select class="form-control form-control-sm custom-input-style">
+          <option>Product</option>
+        </select> -->
+    </div>
+    <div class="col-md-3" style="text-align: center;  ">
+        <input class="form-control form-control-sm custom-input-style" type="text" placeholder="Quick Search" />
+    </div>
+    <div class="col-md-2" style="text-align: right;">
+        <h5>
+            <span class="badge badge-pill bg-info"><a (click)="addNewCategory()"
+                    style="text-decoration: none; color: white;">+ Add category</a></span>
+        </h5>
+    </div>
+    <div class="col-md-1" style="text-align: right;">
+        <span class="badge badge-pill badge-info"><i class="fas fa-info"></i></span>
+        <span class="badge badge-pill badge-info"><i class="fas fa-filter"></i></span>
+    </div>
+</div>
+
+<div class="row list-custom-headings bg-info">
+    <div class="col-md-1">#</div>
+    <div class="col-md-2">Category Id</div>
+    <div class="col-md-3">Category Name</div>
+    <div class="col-md-4">Description</div>
+    <!-- <div class="col-md-2">Category</div>
+          <div class="col-md-2">Stock</div> -->
+</div>
+<hr />
+
+<div *ngFor="let category of pageOfCategories; let i = index">
+    <div id="{{i}}">
+        <div class="row" style="margin-top: 2%; text-align: center;">
+            <div class="col-md-1">
+                <input class="form-check-input" type="checkbox" value="" id="defaultCheck1" />
+            </div>
+            <div class="col-md-2">
+                <input class="form-control form-control-sm custom-input-style" type="text"
+                    [(ngModel)]="category.categoryId" disabled />
+            </div>
+            <div class="col-md-3">
+                <input class="form-control form-control-sm custom-input-style" type="text"
+                    [(ngModel)]="category.categoryName" />
+            </div>
+            <div class="col-md-4">
+                <input class="form-control form-control-sm custom-input-style" type="text"
+                    [(ngModel)]="category.categoryDesc" />
+            </div>
+        </div>
+    </div>
+    <hr />
+</div>
+<div class="col-md-12 text-info" style="bottom: 0; width: 100%;">
+    <nav aria-label="Page navigation example">
+        <ul class="pagination pagination-sm">
+            <li class="page-item" (click)="changePageContent(currPage-1)">
+                <a class="page-link" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                    <span class="sr-only">Previous</span>
+                </a>
+            </li>
+            <li *ngFor="let page of pages" class="page-item" (click)="changePageContent(page)">
+                <a class="page-link" [ngClass]="page==currPage?'active-pagination':''">{{page}}</a>
+            </li>
+            <li class="page-item" (click)="changePageContent(currPage+1)">
+                <a class="page-link" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                    <span class="sr-only">Next</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</div>
+<div class="col-md-12" style="bottom: 0; width: 100%;">
+    <h5>
+        <span class="badge badge-pill bg-info"><a href="#" style="text-decoration: none; color: white;">Save
+            </a></span>&nbsp;
+        <span class="badge badge-pill bg-info"><a href="#"
+                style="text-decoration: none; color: white;">Delete</a></span>
+    </h5>
+</div>

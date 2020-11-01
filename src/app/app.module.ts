@@ -12,6 +12,10 @@ import { InvoicesComponent } from './invoices/invoices.component';
 import { PurchaseOrderComponent } from './purchase-order/purchase-order.component';
 import { CustomersComponent } from './customers/customers.component';
 import { InventoryComponent } from './inventory/inventory.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
+import { CategoryComponent } from './category/category.component';
+import { FileUploadComponent } from './file-upload/file-upload.component';
+// import { GoogleChartsModule } from "angular-google-charts";
 
 @NgModule({
   declarations: [
@@ -23,12 +27,16 @@ import { InventoryComponent } from './inventory/inventory.component';
     InvoicesComponent,
     PurchaseOrderComponent,
     CustomersComponent,
-    InventoryComponent
+    InventoryComponent,
+    DashboardComponent,
+    CategoryComponent,
+    FileUploadComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
-    AppRoutingModule
+    AppRoutingModule,
+    // s
   ],
   providers: [],
   bootstrap: [AppComponent]

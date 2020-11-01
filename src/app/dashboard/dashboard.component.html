@@ -1,0 +1,119 @@
+<div class="row">
+    <div class="col-md-2" style="text-align: center;">
+        <h5><b>Dashboard</b></h5>
+    </div>
+</div><br>
+<div class="row">
+    <div class="col-md-12">
+        <div class="card stat-cards">
+            <div class="card-body">
+                <div class="row" style="text-align:center;">
+                    <div class="col-md-1" style="maragin-top:8px;">
+                        <span class="badge badge-pill badge-info"><i class='fas fa-angle-left'></i></span>
+                    </div>
+                    <div *ngFor="let week of weeks" class="col-md-1 card week">
+                        <small>{{week.month}}<span *ngIf="week.secMonth"> - {{week.secMonth}}</span></small>
+                        <small>03-09</small>
+                        <div class="progress" style="height:5px;margin-bottom:2px">
+                            <div class="progress-bar  bg-info" role="progressbar" style="width: 40%;" aria-valuenow="25"
+                                aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                    </div>
+                    <div class="col-md-1" style="margin-top:8px;">
+                        <span class="badge badge-pill badge-info"><i class='fas fa-angle-right'></i></span>
+                    </div>
+                </div><br>
+                <div class="row" style="text-align:center;">
+                    <!-- <div id="columnchart_values" class="col-md-4 card card-body">
+                        <google-chart [title]="titleWkly" [type]="typeWkly" [data]="dataWkly"
+                            [columns]="columnNamesWkly" [options]="optionsWkly" [width]="widthWkly"
+                            [height]="heightWkly">></google-chart>
+                    </div>
+                    <div class="col-md-4 card card-body">
+                        <google-chart [title]="titleMnthly" [type]="typeMnthly" [data]="dataMnthly"
+                            [columns]="columnNamesMnthly" [options]="optionsMnthly" [width]="widthMnthly"
+                            [height]="heightMnthly">></google-chart>
+                    </div>
+                    <div class="col-md-4 card card-body">
+                        <google-chart [title]="titleYrly" [type]="typeYrly" [data]="dataYrly"
+                            [columns]="columnNamesYrly" [options]="optionsYrly" [width]="widthYrly"
+                            [height]="heightYrly">></google-chart>
+                    </div> -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div><br>
+<div class="row ">
+    <div class="col-md-3">
+        <div class="card stat-cards">
+            <div class="card-body">
+                <h6><b>Total Sales</b></h6>
+                <span style="font-size: 25px;"><i class='fas fa-rupee-sign'></i><b> 2,00,000</b></span>
+                <span style="margin-left: 40px;" class="text-success"><b>10% <i class="fas fa-arrow-up"></i></b></span>
+            </div>
+        </div>
+        <br>
+        <div class="card stat-cards">
+            <div class="card-body">
+                <h6><b>Total Purchase</b></h6>
+                <span style="font-size: 25px;"><i class='fas fa-rupee-sign'></i><b> 2,00,000</b></span>
+                <span style="margin-left: 40px;" class="text-success"><b>10% <i class="fas fa-arrow-up"></i></b></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="card stat-cards">
+            <div class="card-body">
+                <h6><b>Total Clients</b></h6>
+                <span style="font-size: 25px;"><i class='fas fa-user-tie'></i><b> 200</b></span>
+                <!-- <span style="margin-left: 50px;" class="text-success"><b>10% <i class="fas fa-arrow-up"></i></b></span> -->
+            </div>
+        </div>
+        <br>
+        <div class="card stat-cards">
+            <div class="card-body">
+                <h6><b>Total Vendors</b></h6>
+                <span style="font-size: 25px;"><i class='fas fa-user-tie'></i><b> 150</b></span>
+                <!-- <span style="margin-left: 50px;" class="text-success"><b>10% <i class="fas fa-arrow-up"></i></b></span> -->
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="card stat-cards">
+            <div class="card-body">
+                <h6><b>Pending Sales Payment</b></h6>
+                <span style="font-size: 25px;"><i class='fas fa-rupee-sign'></i><b> 10,000</b></span>
+                <span style="margin-left: 40px;" class="text-success"><b>10% <i class="fas fa-arrow-up"></i></b></span>
+            </div>
+        </div>
+        <br>
+        <div class="card stat-cards">
+            <div class="card-body">
+                <h6><b>Pending Purchase Payment</b></h6>
+                <span style="font-size: 25px;"><i class='fas fa-rupee-sign'></i><b> 1,10,000</b></span>
+                <span style="margin-left: 40px;" class="text-success"><b>10% <i class="fas fa-arrow-up"></i></b></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="card stat-cards">
+            <div class="card-body">
+                <h6><b>Total GST</b></h6>
+                <span style="font-size: 25px;"><i class='fas fa-rupee-sign'></i><b> 36,000</b></span>
+                <span style="margin-left: 50px;" class="text-success"><b>10% <i class="fas fa-arrow-up"></i></b></span>
+            </div>
+        </div>
+        <br>
+        <div class="card">
+            <div class="card-body stat-cards">
+                <h6><b>Expired Products</b></h6>
+                <span style="font-size: 25px;"><i class='fas fa-dolly-flatbed'></i><b> 150</b></span>
+                <span style="margin-left: 50px;" class="text-success"><b>10% <i class="fas fa-arrow-up"></i></b></span>
+            </div>
+        </div>
+    </div>
+</div>
