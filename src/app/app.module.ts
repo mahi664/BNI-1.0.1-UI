@@ -15,6 +15,8 @@ import { InventoryComponent } from './inventory/inventory.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { CategoryComponent } from './category/category.component';
 import { FileUploadComponent } from './file-upload/file-upload.component';
+import { AddCategoryComponent } from './add-category/add-category.component';
+import { HttpClientModule } from '@angular/common/http';
 // import { GoogleChartsModule } from "angular-google-charts";
 
 @NgModule({
@@ -30,12 +32,14 @@ import { FileUploadComponent } from './file-upload/file-upload.component';
     InventoryComponent,
     DashboardComponent,
     CategoryComponent,
-    FileUploadComponent
+    FileUploadComponent,
+    AddCategoryComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
     AppRoutingModule,
+    HttpClientModule
     // s
   ],
   providers: [],

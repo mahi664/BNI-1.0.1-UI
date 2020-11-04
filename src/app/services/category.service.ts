@@ -1,22 +1,21 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { CategoryDetails } from '../category/category.component';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CategoryService {
 
-  constructor() { }
+  constructor(private http : HttpClient) { }
 
   addNewCategory(category) {
-    // console.log(category);
-    // return this.http.post(
-    //   "https://billingandinventorymgmt.herokuapp.com/add-new-category",
-    //   {
-    //     categoryName: "Test category name 0",
-    //     categoryDispName: "Test category display name 0",
-    //     categoryDescription: "Test category description 0"
-    //   }
-    // );
-    alert("adding new category");
+   return  this.http.post("http://localhost:8080/add-new-category",category,{responseType : 'text'});
+  }
+  getAllCategoryDetails(){
+   return this.http.get<CategoryDetails[]>("http://localhost:8080/categories");
+  }
+  updateCategories(categories:CategoryDetails[]){
+    return this.http.post("http://localhost:8080/update-category",categories,{responseType:'text'});
   }
 }

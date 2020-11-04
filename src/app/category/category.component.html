@@ -2,12 +2,10 @@
     <div class="col-md-2" style="text-align: center;">
         <h5><b>Category</b></h5>
     </div>
-    <div class="col-md-2" style="text-align: center;  ">
-        <!-- <select class="form-control form-control-sm custom-input-style">
-          <option>{{message}}</option>
-        </select> -->
+    <div class="col-md-1" style="text-align: center;  ">
+        <input class="form-control form-control-sm custom-input-style" type="text" [(ngModel)]="recPerPage" placeholder="Quick Search" />
     </div>
-    <div class="col-md-2" style="text-align: center;">
+    <div class="col-md-3" style="text-align: center;">
         <!-- <select class="form-control form-control-sm custom-input-style">
           <option>Product</option>
         </select> -->
@@ -17,8 +15,10 @@
     </div>
     <div class="col-md-2" style="text-align: right;">
         <h5>
-            <span class="badge badge-pill bg-info"><a (click)="addNewCategory()"
-                    style="text-decoration: none; color: white;">+ Add category</a></span>
+            <span class="badge badge-pill bg-info"><a routerLink="/Add-category"
+                    style="text-decoration: none; color: white;" data-toggle="modal" data-target="#exampleModal"
+                    data-toggle="modal" data-target="#exampleModal">+ Add
+                    category</a></span>
         </h5>
     </div>
     <div class="col-md-1" style="text-align: right;">
@@ -29,8 +29,8 @@
 
 <div class="row list-custom-headings bg-info">
     <div class="col-md-1">#</div>
-    <div class="col-md-2">Category Id</div>
     <div class="col-md-3">Category Name</div>
+    <div class="col-md-3">Display Name</div>
     <div class="col-md-4">Description</div>
     <!-- <div class="col-md-2">Category</div>
           <div class="col-md-2">Stock</div> -->
@@ -41,19 +41,20 @@
     <div id="{{i}}">
         <div class="row" style="margin-top: 2%; text-align: center;">
             <div class="col-md-1">
-                <input class="form-check-input" type="checkbox" value="" id="defaultCheck1" />
-            </div>
-            <div class="col-md-2">
-                <input class="form-control form-control-sm custom-input-style" type="text"
-                    [(ngModel)]="category.categoryId" disabled />
+                <input (change)="toggleStatus()" [(ngModel)]="categoryCheckboxStatus[category.categoryId]"
+                    class="form-check-input" type="checkbox" value="" id="defaultCheck1" />
             </div>
             <div class="col-md-3">
                 <input class="form-control form-control-sm custom-input-style" type="text"
-                    [(ngModel)]="category.categoryName" />
+                    [(ngModel)]="category.categoryName" (ngModelChange)="addCategoryToUpdate(category.categoryId,'categoryName',category.categoryName)"/>
+            </div>
+            <div class="col-md-3">
+                <input class="form-control form-control-sm custom-input-style" type="text"
+                    [(ngModel)]="category.categoryDispName" (ngModelChange)="addCategoryToUpdate(category.categoryId,'categoryDispName',category.categoryDispName)" />
             </div>
             <div class="col-md-4">
                 <input class="form-control form-control-sm custom-input-style" type="text"
-                    [(ngModel)]="category.categoryDesc" />
+                    [(ngModel)]="category.categoryDescription" (ngModelChange)="addCategoryToUpdate(category.categoryId,'categoryDescription',category.categoryDescription)"/>
             </div>
         </div>
     </div>
@@ -82,9 +83,11 @@
 </div>
 <div class="col-md-12" style="bottom: 0; width: 100%;">
     <h5>
-        <span class="badge badge-pill bg-info"><a href="#" style="text-decoration: none; color: white;">Save
+        <span class="badge badge-pill bg-info"><a (click)="updateSelectedCategories()" style="text-decoration: none; color: white; cursor: pointer;">Save
             </a></span>&nbsp;
-        <span class="badge badge-pill bg-info"><a href="#"
-                style="text-decoration: none; color: white;">Delete</a></span>
+        <span class="badge badge-pill bg-info"><a
+                style="text-decoration: none; color: white; cursor: pointer;">Delete</a></span>&nbsp;
+        <span class="badge badge-pill bg-info"><a (click)="populateCategoryCheckboxStatuses()"
+                style="text-decoration: none; color: white; cursor: pointer;">Clear</a></span>
     </h5>
 </div>

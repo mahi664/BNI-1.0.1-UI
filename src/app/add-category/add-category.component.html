@@ -1,0 +1,47 @@
+<div class="row">
+    <div class="col-md-3">
+
+    </div>
+    <div class="col-md-3">
+        <p>Category Name :</p>
+    </div>
+    <div class="col-md-3">
+        <input [(ngModel)]="category.categoryName" type="email" class="form-control form-control-sm" id="inputEmail3" placeholder="Category Name">
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-3">
+
+    </div>
+    <div class="col-md-3">
+        <p>Category Display Name :</p>
+    </div>
+    <div class="col-md-3">
+        <input [(ngModel)]="category.categoryDispName" type="email" class="form-control form-control-sm" id="inputEmail3" placeholder="Category Display Name">
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-3">
+
+    </div>
+    <div class="col-md-3">
+        <p>Category Description :</p>
+    </div>
+    <div class="col-md-3">
+        <input [(ngModel)]="category.categoryDescription" type="email" class="form-control form-control-sm" id="inputEmail3" placeholder="Category Description">
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-5">
+
+    </div>
+    <div class="col-md-3">
+        <span style="cursor: pointer" class="badge badge-pill bg-info"><a (click)="addCategory()" style="text-decoration: none; color: white;">Save
+            </a></span>&nbsp;
+        <span class="badge badge-pill bg-info"><a href="#"
+                style="text-decoration: none; color: white;">Clear</a></span>
+    </div>
+</div>

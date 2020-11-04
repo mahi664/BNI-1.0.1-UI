@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { AddCategoryComponent } from './add-category/add-category.component';
 import { CategoryComponent } from './category/category.component';
 import { CustomersComponent } from './customers/customers.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
@@ -19,6 +20,7 @@ const routes: Routes = [
   { path: "Dashboard", component: DashboardComponent },
   { path: "Categories", component: CategoryComponent },
   { path: "File-Uploads", component: FileUploadComponent },
+  { path: "Add-category", component: AddCategoryComponent },
   { path: "Invoices", component: InvoicesComponent }
 ];
 
