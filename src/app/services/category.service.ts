@@ -18,4 +18,10 @@ export class CategoryService {
   updateCategories(categories:CategoryDetails[]){
     return this.http.post("http://localhost:8080/update-category",categories,{responseType:'text'});
   }
+  deleteCategories(categoryList:number[]){
+    return this.http.post("http://localhost:8080/delete-category",categoryList,{responseType:'text'});
+  }
+  getFilteredCategories(filteredText:string){
+    return this.http.post<CategoryDetails[]>("http://localhost:8080/quick-search-category",filteredText);
+  }
 }

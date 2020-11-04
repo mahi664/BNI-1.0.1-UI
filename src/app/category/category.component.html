@@ -3,7 +3,8 @@
         <h5><b>Category</b></h5>
     </div>
     <div class="col-md-1" style="text-align: center;  ">
-        <input class="form-control form-control-sm custom-input-style" type="text" [(ngModel)]="recPerPage" placeholder="Quick Search" />
+        <input class="form-control form-control-sm custom-input-style" type="text" [(ngModel)]="recPerPage"
+        (ngModelChange)="changeRecPerPage()" placeholder="Quick Search" />
     </div>
     <div class="col-md-3" style="text-align: center;">
         <!-- <select class="form-control form-control-sm custom-input-style">
@@ -11,7 +12,15 @@
         </select> -->
     </div>
     <div class="col-md-3" style="text-align: center;  ">
-        <input class="form-control form-control-sm custom-input-style" type="text" placeholder="Quick Search" />
+        <input class="form-control form-control-sm custom-input-style" type="text" placeholder="Quick Search"
+            [(ngModel)]="categoryFilterText" (ngModelChange)="getFilteredList(categoryFilterText)"/>
+
+        <span class="custom-right-dropdown custom-side-nav card" [hidden]="!batchDropDowns[i]">
+            <small *ngFor="let batch of filteredBatchNos; let j = index">
+                <a class="text-info custom-right-dropdown-content nav-link" (click)="selectItem(batch,i,product)"
+                    [ngClass]="{'select-item-style':j==selectedIndex}">{{batch}}</a>
+            </small>
+        </span>
     </div>
     <div class="col-md-2" style="text-align: right;">
         <h5>
@@ -46,15 +55,18 @@
             </div>
             <div class="col-md-3">
                 <input class="form-control form-control-sm custom-input-style" type="text"
-                    [(ngModel)]="category.categoryName" (ngModelChange)="addCategoryToUpdate(category.categoryId,'categoryName',category.categoryName)"/>
+                    [(ngModel)]="category.categoryName"
+                    (ngModelChange)="addCategoryToUpdate(category.categoryId,'categoryName',category.categoryName)" />
             </div>
             <div class="col-md-3">
                 <input class="form-control form-control-sm custom-input-style" type="text"
-                    [(ngModel)]="category.categoryDispName" (ngModelChange)="addCategoryToUpdate(category.categoryId,'categoryDispName',category.categoryDispName)" />
+                    [(ngModel)]="category.categoryDispName"
+                    (ngModelChange)="addCategoryToUpdate(category.categoryId,'categoryDispName',category.categoryDispName)" />
             </div>
             <div class="col-md-4">
                 <input class="form-control form-control-sm custom-input-style" type="text"
-                    [(ngModel)]="category.categoryDescription" (ngModelChange)="addCategoryToUpdate(category.categoryId,'categoryDescription',category.categoryDescription)"/>
+                    [(ngModel)]="category.categoryDescription"
+                    (ngModelChange)="addCategoryToUpdate(category.categoryId,'categoryDescription',category.categoryDescription)" />
             </div>
         </div>
     </div>
@@ -83,9 +95,10 @@
 </div>
 <div class="col-md-12" style="bottom: 0; width: 100%;">
     <h5>
-        <span class="badge badge-pill bg-info"><a (click)="updateSelectedCategories()" style="text-decoration: none; color: white; cursor: pointer;">Save
+        <span class="badge badge-pill bg-info"><a (click)="updateSelectedCategories()"
+                style="text-decoration: none; color: white; cursor: pointer;">Save
             </a></span>&nbsp;
-        <span class="badge badge-pill bg-info"><a
+        <span class="badge badge-pill bg-info"><a (click)="deleteSelectedCategories()"
                 style="text-decoration: none; color: white; cursor: pointer;">Delete</a></span>&nbsp;
         <span class="badge badge-pill bg-info"><a (click)="populateCategoryCheckboxStatuses()"
                 style="text-decoration: none; color: white; cursor: pointer;">Clear</a></span>

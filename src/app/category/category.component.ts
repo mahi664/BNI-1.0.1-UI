@@ -4,7 +4,7 @@ import { CategoryService } from '../services/category.service';
 
 export class CategoryDetails {
   constructor(
-    public categoryId : number,
+    public categoryId: number,
     public categoryName: string,
     public categoryDispName: string,
     public categoryDescription: string
@@ -27,7 +27,7 @@ export class CategoryComponent implements OnInit {
 
   message = "";
   constructor(private categoryService: CategoryService,
-              private router : Router) { }
+    private router: Router) { }
 
   categories: CategoryDetails[];
   noOfPages;
@@ -35,30 +35,48 @@ export class CategoryComponent implements OnInit {
   pageOfCategories;
   pages;
   currPage;
-  recPerPage;
+  recPerPage: number;
   categoryCheckboxStatus = [];
-  categoriesToUpdate : CategoryDetails[] = [];
+  categoriesToUpdate: CategoryDetails[] = [];
+  filteredBatchNos: CategoryDetails[] = [];
+  batchDropDowns = false;
+  selectedIndex = -1;
+  categoryFilterText = "";
 
   ngOnInit() {
-    this.noOfPages=0;
-    this.pageOfCategories=[];
-    this.pages=[];
-    this.currPage=1;
-    this.recPerPage=5;
-    this.categoryService.getAllCategoryDetails().subscribe(
-      respose => {
-        console.log(respose);
-        this.categories = respose;
-        this.populateCategoryCheckboxStatuses();
-        // console.log(this.categoryCheckboxStatus);
-        this.noOfPages = Math.ceil(this.categories.length / this.recPerPage);
-        this.noOfPages = this.noOfPages <= 0 ? 1 : this.noOfPages;
-        for (this.i = 1; this.i <= this.noOfPages; this.i++) {
-          this.pages.push(this.i);
+    this.noOfPages = 0;
+    this.pageOfCategories = [];
+    this.pages = [];
+    this.currPage = 1;
+    this.recPerPage = 5;
+    if (this.categories === undefined) {
+      this.categoryService.getAllCategoryDetails().subscribe(
+        respose => {
+          console.log(respose);
+          this.categories = respose;
+          this.populateCategoryCheckboxStatuses();
+          // console.log(this.categoryCheckboxStatus);
+          this.populatePagination();
         }
-        this.pageOfCategories = this.categories.slice(0, this.recPerPage);
-      }
-    );
+      );
+    }
+    else {
+      this.populateCategoryCheckboxStatuses();
+      // console.log(this.categoryCheckboxStatus);
+      this.populatePagination();
+    }
+  }
+
+  populatePagination() {
+    this.pages = [];
+    this.currPage = 1;
+    this.pageOfCategories = [];
+    this.noOfPages = Math.ceil(this.categories.length / this.recPerPage);
+    this.noOfPages = this.noOfPages <= 0 ? 1 : this.noOfPages;
+    for (this.i = 1; this.i <= this.noOfPages; this.i++) {
+      this.pages.push(this.i);
+    }
+    this.pageOfCategories = this.categories.slice(0, this.recPerPage);
   }
 
   changePageContent(pageNo) {
@@ -71,57 +89,109 @@ export class CategoryComponent implements OnInit {
     this.currPage = pageNo;
   }
 
-  populateCategoryCheckboxStatuses(){
-    for(let cat of this.categories){
+  populateCategoryCheckboxStatuses() {
+    for (let cat of this.categories) {
       this.categoryCheckboxStatus[cat.categoryId] = false;
     }
   }
 
-  toggleStatus(){
+  toggleStatus() {
     // console.log(this.categoryCheckboxStatus);
   }
 
-  addCategoryToUpdate(categoryId:number, field:string, updatedValue:string){
+  addCategoryToUpdate(categoryId: number, field: string, updatedValue: string) {
     // console.log(this.categoriesToUpdate);
-    this.categoryCheckboxStatus[categoryId]=true;
+    this.categoryCheckboxStatus[categoryId] = true;
     let categoryDetObj = [];
-    if(this.categoriesToUpdate!=undefined){
-       categoryDetObj = this.categoriesToUpdate.filter((cat)=>cat.categoryId==categoryId);
+    if (this.categoriesToUpdate != undefined) {
+      categoryDetObj = this.categoriesToUpdate.filter((cat) => cat.categoryId == categoryId);
     }
-    if(categoryDetObj==undefined || categoryDetObj[0]==null || categoryDetObj[0]==undefined){
-      categoryDetObj[0] = new CategoryDetails(categoryId,null,null,null);
+    if (categoryDetObj == undefined || categoryDetObj[0] == null || categoryDetObj[0] == undefined) {
+      categoryDetObj[0] = new CategoryDetails(categoryId, null, null, null);
       this.categoriesToUpdate.push(categoryDetObj[0]);
     }
-    if(field==="categoryName"){
+    if (field === "categoryName") {
       categoryDetObj[0].categoryName = updatedValue;
     }
-    else if(field==="categoryDispName"){
+    else if (field === "categoryDispName") {
       categoryDetObj[0].categoryDispName = updatedValue;
     }
-    else if(field==="categoryDescription"){
+    else if (field === "categoryDescription") {
       categoryDetObj[0].categoryDescription = updatedValue;
     }
     // console.log(categoryDetObj[0]);
     // console.log(this.categoriesToUpdate);
   }
 
-  updateSelectedCategories(){
-    console.log(this.categoriesToUpdate);
-    let categoryList : CategoryDetails[];
-    categoryList = this.categoriesToUpdate.filter((cat)=>this.categoryCheckboxStatus[cat.categoryId]==true);
-    
-    if(categoryList.length<=0){
+  updateSelectedCategories() {
+    // console.log(this.categoriesToUpdate);
+    let categoryList: CategoryDetails[];
+    categoryList = this.categoriesToUpdate.filter((cat) => this.categoryCheckboxStatus[cat.categoryId] == true);
+
+    if (categoryList.length <= 0) {
       alert("Please Update atleast one record");
     }
-    else{
+    else {
       this.categoryService.updateCategories(categoryList).subscribe(
-        response =>{
+        response => {
           alert(response);
           this.populateCategoryCheckboxStatuses();
-          this.categoriesToUpdate=[];
+          this.categoriesToUpdate = [];
           this.ngOnInit();
         }
       );
     }
+  }
+
+  deleteSelectedCategories() {
+    let categoryList: CategoryDetails[];
+    categoryList = this.categories.filter((cat) => this.categoryCheckboxStatus[cat.categoryId] == true);
+    if (categoryList.length <= 0) {
+      alert("Please Update atleast one record");
+    }
+    else {
+      console.log(categoryList);
+      let categoryIds: number[] = [];
+      for (let cat of categoryList) {
+        categoryIds.push(cat.categoryId);
+      }
+
+      this.categoryService.deleteCategories(categoryIds).subscribe(
+        response => {
+          alert(response);
+          this.populateCategoryCheckboxStatuses();
+          this.categoriesToUpdate = [];
+          this.ngOnInit();
+        }
+      );
+    }
+  }
+  getFilteredList(inputItem: string) {
+    if (inputItem === '') {
+      this.categoryService.getAllCategoryDetails().subscribe(
+        response => {
+          this.categories = response;
+          this.ngOnInit();
+        }
+      );
+    }
+    else {
+      this.categoryService.getFilteredCategories(inputItem).subscribe(
+        response => {
+          this.categories = response;
+          this.ngOnInit();
+        }
+      );
+    }
+    //else this.filteredBatchNos = this.batchNoList.filter((item) => item.toLowerCase().includes(inputItem.toLowerCase()));
+  }
+
+  changeRecPerPage() {
+    console.log(this.recPerPage);
+    if (this.recPerPage === undefined || Number(this.recPerPage) == 0)
+      this.recPerPage = 5
+    else
+      this.recPerPage = Number(this.recPerPage);
+    this.populatePagination();
   }
 }
