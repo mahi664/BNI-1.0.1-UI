@@ -4,7 +4,7 @@
     </div>
     <div class="col-md-1" style="text-align: center;  ">
         <input class="form-control form-control-sm custom-input-style" type="text" [(ngModel)]="recPerPage"
-        (ngModelChange)="changeRecPerPage()" placeholder="Quick Search" />
+        (ngModelChange)="changeRecPerPage()" placeholder="Record per page" />
     </div>
     <div class="col-md-3" style="text-align: center;">
         <!-- <select class="form-control form-control-sm custom-input-style">
@@ -32,7 +32,7 @@
     </div>
     <div class="col-md-1" style="text-align: right;">
         <span class="badge badge-pill badge-info"><i class="fas fa-info"></i></span>
-        <span class="badge badge-pill badge-info"><i class="fas fa-filter"></i></span>
+        <!-- <span class="badge badge-pill badge-info"><i class="fas fa-filter"></i></span> -->
     </div>
 </div>
 
@@ -72,6 +72,7 @@
     </div>
     <hr />
 </div>
+<div class="row">
 <div class="col-md-12 text-info" style="bottom: 0; width: 100%;">
     <nav aria-label="Page navigation example">
         <ul class="pagination pagination-sm">
@@ -93,7 +94,7 @@
         </ul>
     </nav>
 </div>
-<div class="col-md-12" style="bottom: 0; width: 100%;">
+<div class="col-md-12" style="bottom: 0; width: 100%; right: 0;">
     <h5>
         <span class="badge badge-pill bg-info"><a (click)="updateSelectedCategories()"
                 style="text-decoration: none; color: white; cursor: pointer;">Save
@@ -103,4 +104,5 @@
         <span class="badge badge-pill bg-info"><a (click)="populateCategoryCheckboxStatuses()"
                 style="text-decoration: none; color: white; cursor: pointer;">Clear</a></span>
     </h5>
+</div>
 </div>

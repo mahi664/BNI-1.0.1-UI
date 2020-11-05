@@ -17,6 +17,7 @@ import { CategoryComponent } from './category/category.component';
 import { FileUploadComponent } from './file-upload/file-upload.component';
 import { AddCategoryComponent } from './add-category/add-category.component';
 import { HttpClientModule } from '@angular/common/http';
+import { AddProductComponent } from './add-product/add-product.component';
 // import { GoogleChartsModule } from "angular-google-charts";
 
 @NgModule({
@@ -33,7 +34,8 @@ import { HttpClientModule } from '@angular/common/http';
     DashboardComponent,
     CategoryComponent,
     FileUploadComponent,
-    AddCategoryComponent
+    AddCategoryComponent,
+    AddProductComponent
   ],
   imports: [
     BrowserModule,

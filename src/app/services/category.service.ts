@@ -24,4 +24,7 @@ export class CategoryService {
   getFilteredCategories(filteredText:string){
     return this.http.post<CategoryDetails[]>("http://localhost:8080/quick-search-category",filteredText);
   }
+  getCategoryNames(){
+    return this.http.get<string[]>("http://localhost:8080/categories-names");
+  }
 }
