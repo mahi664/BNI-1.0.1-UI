@@ -1,0 +1,11 @@
+.select-item-style{
+    background-color:  rgb(233, 236, 239);;
+    }
+
+    .custom-right-dropdown{
+        position:relative;
+        z-index: 1000;
+        background-color: white;
+        text-align: center;
+        box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.2), 0 6px 10px 0 rgba(0, 0, 0, 0.19);
+        }

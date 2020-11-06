@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { AddCategoryComponent } from './add-category/add-category.component';
+import { AddGstComponent } from './add-gst/add-gst.component';
 import { AddProductComponent } from './add-product/add-product.component';
 import { CategoryComponent } from './category/category.component';
 import { CustomersComponent } from './customers/customers.component';
@@ -23,6 +24,7 @@ const routes: Routes = [
   { path: "File-Uploads", component: FileUploadComponent },
   { path: "Add-category", component: AddCategoryComponent },
   { path: "Add-product", component: AddProductComponent },
+  { path: "Add-gst", component: AddGstComponent },
   { path: "Invoices", component: InvoicesComponent }
 ];
 

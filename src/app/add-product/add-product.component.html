@@ -6,7 +6,8 @@
         <p>Product Name :</p>
     </div>
     <div class="col-md-3">
-        <input [(ngModel)]="productObj.productName" type="email" class="form-control form-control-sm"  placeholder="Product Name">
+        <input [(ngModel)]="productObj.productName" type="text" class="form-control form-control-sm"
+            placeholder="Product Name">
     </div>
 </div>
 
@@ -18,7 +19,8 @@
         <p>Product Display Name :</p>
     </div>
     <div class="col-md-3">
-        <input [(ngModel)]="productObj.displayName" type="email" class="form-control form-control-sm"  placeholder="Product Display Name">
+        <input [(ngModel)]="productObj.displayName" type="text" class="form-control form-control-sm"
+            placeholder="Product Display Name">
     </div>
 </div>
 
@@ -30,7 +32,8 @@
         <p>Product Description :</p>
     </div>
     <div class="col-md-3">
-        <input [(ngModel)]="productObj.description" type="email" class="form-control form-control-sm"  placeholder="Product Description">
+        <input [(ngModel)]="productObj.description" type="text" class="form-control form-control-sm"
+            placeholder="Product Description">
     </div>
 </div>
 
@@ -42,7 +45,18 @@
         <p>category :</p>
     </div>
     <div class="col-md-3">
-        <input [(ngModel)]="productObj.categoryName" type="email" class="form-control form-control-sm"  placeholder="productObj">
+        <input [(ngModel)]="productObj.categoryName" (ngModelChange)="getFilteredList(productObj.categoryName,1)"
+            (blur)="toggleListDisplay(0,1,productObj)" (focus)="toggleListDisplay(1,1,productObj)"
+            (keyup)="onKeyPress($event,1,productObj)" type="text" class="form-control form-control-sm"
+            placeholder="categoryName">
+        <span class="custom-right-dropdown custom-side-nav card" [hidden]="!batchDropDowns[1]"
+            style="height: 40%; overflow-y: scroll;">
+            <small *ngFor="let batch of filteredCategoryList; let j = index">
+                <a class="text-info custom-right-dropdown-content nav-link"
+                    (click)="selectItem(batch,1,productObj)"
+                    [ngClass]="{'select-item-style':j==selectedIndex}">{{batch}}</a>
+            </small>
+        </span>
     </div>
 </div>
 
@@ -54,7 +68,7 @@
         <p>Unit :</p>
     </div>
     <div class="col-md-3">
-        <input [(ngModel)]="productObj.unit" type="email" class="form-control form-control-sm"  placeholder="Unit">
+        <input [(ngModel)]="productObj.unit" type="text" class="form-control form-control-sm" placeholder="Unit">
     </div>
 </div>
 <div class="row">
@@ -65,7 +79,18 @@
         <p>GST :</p>
     </div>
     <div class="col-md-3">
-        <input [(ngModel)]="productObj.gst" type="email" class="form-control form-control-sm"  placeholder="GST">
+        <input [(ngModel)]="productObj.gstType" (ngModelChange)="getFilteredList(productObj.gstType,0)"
+            (blur)="toggleListDisplay(0,0,productObj)" (focus)="toggleListDisplay(1,0,productObj)"
+            (keyup)="onKeyPress($event,0,productObj)" type="text" class="form-control form-control-sm"
+            placeholder="GST">
+        <span class="custom-right-dropdown custom-side-nav card" [hidden]="!batchDropDowns[0]"
+            style="height: auto; overflow-y: scroll;">
+            <small *ngFor="let batch of filteredGstRatesList; let j = index">
+                <a class="text-info custom-right-dropdown-content nav-link"
+                    (click)="selectItem(batch.gstName,0,productObj)"
+                    [ngClass]="{'select-item-style':j==selectedIndex}">{{batch.gstName}}</a>
+            </small>
+        </span>
     </div>
 </div>
 
@@ -74,9 +99,9 @@
 
     </div>
     <div class="col-md-3">
-        <span style="cursor: pointer" class="badge badge-pill bg-info"><a (click)="addProduct()" style="text-decoration: none; color: white;">Save
+        <span style="cursor: pointer" class="badge badge-pill bg-info"><a (click)="addProduct()"
+                style="text-decoration: none; color: white;">Save
             </a></span>&nbsp;
-        <span class="badge badge-pill bg-info"><a href="#"
-                style="text-decoration: none; color: white;">Clear</a></span>
+        <span class="badge badge-pill bg-info"><a href="#" style="text-decoration: none; color: white;">Clear</a></span>
     </div>
 </div>

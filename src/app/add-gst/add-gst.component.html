@@ -1,0 +1,35 @@
+<div class="row">
+    <div class="col-md-3">
+
+    </div>
+    <div class="col-md-3">
+        <p>GST Name :</p>
+    </div>
+    <div class="col-md-3">
+        <input [(ngModel)]="gstDetails.gstName" type="text" class="form-control form-control-sm"  placeholder="GST Name">
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-3">
+
+    </div>
+    <div class="col-md-3">
+        <p>GST Rate :</p>
+    </div>
+    <div class="col-md-3">
+        <input [(ngModel)]="gstDetails.gstRate" type="text" class="form-control form-control-sm"  placeholder="GST Rate">
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-5">
+
+    </div>
+    <div class="col-md-3">
+        <span style="cursor: pointer" class="badge badge-pill bg-info"><a (click)="addGstDet()" style="text-decoration: none; color: white;">Save
+            </a></span>&nbsp;
+        <span class="badge badge-pill bg-info"><a href="#"
+                style="text-decoration: none; color: white;">Clear</a></span>
+    </div>
+</div>
