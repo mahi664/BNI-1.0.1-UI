@@ -27,4 +27,11 @@ export class ProductService {
     return this.http.get<ProductDet[]>("http://localhost:8080/get-inventory-details");
   }
 
+  getProductNames(){
+    return this.http.get<string[]>("http://localhost:8080/get-product-names");
+  }
+
+  getProdName2GstMap(){
+    return this.http.get<{}>("http://localhost:8080/get-product-gst-map");
+  }
 }

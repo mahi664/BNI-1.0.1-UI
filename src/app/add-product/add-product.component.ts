@@ -108,7 +108,7 @@ export class AddProductComponent implements OnInit {
   selectItem(batch: string, index: number, product) {
     this.batchDropDowns[index] = false;
     if (index == 0) {
-      let temp: GstDetails[] = this.gstRatesList.filter((item) => item.gstName.toLowerCase === batch.toLowerCase)
+      let temp: GstDetails[] = this.gstRatesList.filter((item) => item.gstName.toLowerCase() === batch.toLowerCase())
       product.gstType = batch;
       product.gst = temp[0].gstRate;
     }

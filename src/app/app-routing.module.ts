@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { AddCategoryComponent } from './add-category/add-category.component';
 import { AddGstComponent } from './add-gst/add-gst.component';
 import { AddProductComponent } from './add-product/add-product.component';
+import { AddVendorComponent } from './add-vendor/add-vendor.component';
 import { CategoryComponent } from './category/category.component';
 import { CustomersComponent } from './customers/customers.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
@@ -12,6 +13,7 @@ import { InvoiceGenerationComponent } from './invoice-generation/invoice-generat
 import { InvoicesComponent } from './invoices/invoices.component';
 import { PurchaseInvoiceGenerationComponent } from './purchase-invoice-generation/purchase-invoice-generation.component';
 import { PurchaseOrderComponent } from './purchase-order/purchase-order.component';
+import { VendorComponent } from './vendor/vendor.component';
 
 const routes: Routes = [
   { path: "New-Sales-Invoice", component: InvoiceGenerationComponent },
@@ -25,6 +27,8 @@ const routes: Routes = [
   { path: "Add-category", component: AddCategoryComponent },
   { path: "Add-product", component: AddProductComponent },
   { path: "Add-gst", component: AddGstComponent },
+  { path: "Add-vendor", component: AddVendorComponent },
+  { path: "Vendors", component: VendorComponent },
   { path: "Invoices", component: InvoicesComponent }
 ];
 

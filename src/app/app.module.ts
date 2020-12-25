@@ -19,6 +19,8 @@ import { AddCategoryComponent } from './add-category/add-category.component';
 import { HttpClientModule } from '@angular/common/http';
 import { AddProductComponent } from './add-product/add-product.component';
 import { AddGstComponent } from './add-gst/add-gst.component';
+import { VendorComponent } from './vendor/vendor.component';
+import { AddVendorComponent } from './add-vendor/add-vendor.component';
 // import { GoogleChartsModule } from "angular-google-charts";
 
 @NgModule({
@@ -37,7 +39,9 @@ import { AddGstComponent } from './add-gst/add-gst.component';
     FileUploadComponent,
     AddCategoryComponent,
     AddProductComponent,
-    AddGstComponent
+    AddGstComponent,
+    VendorComponent,
+    AddVendorComponent
   ],
   imports: [
     BrowserModule,
