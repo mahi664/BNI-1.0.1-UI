@@ -6,7 +6,8 @@ import { ProductService } from '../services/product.service';
 
 export class Product {
   constructor(public productName: string, public displayName: string, public description: string,
-    public categoryName: string, public unit: string, public gst: number, public gstType: string) { }
+    public categoryName: string, public unit: string, public gst: number, public gstType: string,
+    public mrp : number, public sellingPrice: number,public manufacturer: string,public packaging: string) { }
 }
 @Component({
   selector: 'app-add-product',
@@ -16,7 +17,7 @@ export class Product {
 export class AddProductComponent implements OnInit {
 
   categoryNamesList: string[] = [];
-  productObj = new Product("", "", "", "", "", 0, "");
+  productObj = new Product("", "", "", "", "", 0, "",0,0,"","");
   public keypressed;
   invoiceId = 20200001;
   invoiceDate = new Date();

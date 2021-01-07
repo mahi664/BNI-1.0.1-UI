@@ -3,24 +3,11 @@
 
     </div>
     <div class="col-md-3">
-        <p>Product Name :</p>
+        <p>Vendor Name :</p>
     </div>
     <div class="col-md-3">
-        <input [(ngModel)]="productObj.productName" type="text" class="form-control form-control-sm"
-            placeholder="Product Name">
-    </div>
-</div>
-
-<div class="row">
-    <div class="col-md-3">
-
-    </div>
-    <div class="col-md-3">
-        <p>Product Display Name :</p>
-    </div>
-    <div class="col-md-3">
-        <input [(ngModel)]="productObj.displayName" type="text" class="form-control form-control-sm"
-            placeholder="Product Display Name">
+        <input [(ngModel)]="vendorDetObj.vendorName" type="text" class="form-control form-control-sm"
+            placeholder="Vendor Name">
     </div>
 </div>
 
@@ -29,11 +16,11 @@
 
     </div>
     <div class="col-md-3">
-        <p>Product Description :</p>
+        <p>UID No :</p>
     </div>
     <div class="col-md-3">
-        <input [(ngModel)]="productObj.description" type="text" class="form-control form-control-sm"
-            placeholder="Product Description">
+        <input [(ngModel)]="vendorDetObj.uidNo" type="text" class="form-control form-control-sm"
+            placeholder="UID No">
     </div>
 </div>
 
@@ -42,10 +29,38 @@
 
     </div>
     <div class="col-md-3">
-        <p>Category :</p>
+        <p>State :</p>
     </div>
     <div class="col-md-3">
-        <input [(ngModel)]="productObj.categoryName" (ngModelChange)="getFilteredList(productObj.categoryName,1)"
+        <input [(ngModel)]="vendorDetObj.state" type="text" class="form-control form-control-sm"
+            placeholder="State">
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-3">
+
+    </div>
+    <div class="col-md-3">
+        <p>District :</p>
+    </div>
+    <div class="col-md-3">
+        <input [(ngModel)]="vendorDetObj.district" type="text" class="form-control form-control-sm"
+            placeholder="District">
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-3">
+
+    </div>
+    <div class="col-md-3">
+        <p>City :</p>
+    </div>
+    <div class="col-md-3">
+        <input [(ngModel)]="vendorDetObj.city" type="text" class="form-control form-control-sm"
+        placeholder="City">
+        <!-- <input [(ngModel)]="productObj.categoryName" (ngModelChange)="getFilteredList(productObj.categoryName,1)"
             (blur)="toggleListDisplay(0,1,productObj)" (focus)="toggleListDisplay(1,1,productObj)"
             (keyup)="onKeyPress($event,1,productObj)" type="text" class="form-control form-control-sm"
             placeholder="categoryName">
@@ -55,7 +70,7 @@
                     (click)="selectItem(batch,1,productObj)"
                     [ngClass]="{'select-item-style':j==selectedIndex}">{{batch}}</a>
             </small>
-        </span>
+        </span> -->
     </div>
 </div>
 
@@ -64,32 +79,10 @@
 
     </div>
     <div class="col-md-3">
-        <p>Unit :</p>
+        <p>Village :</p>
     </div>
     <div class="col-md-3">
-        <input [(ngModel)]="productObj.unit" type="text" class="form-control form-control-sm" placeholder="Unit">
-    </div>
-</div>
-<div class="row">
-    <div class="col-md-3">
-
-    </div>
-    <div class="col-md-3">
-        <p>MRP :</p>
-    </div>
-    <div class="col-md-3">
-        <input [(ngModel)]="productObj.mrp" type="text" class="form-control form-control-sm" placeholder="MRP">
-    </div>
-</div>
-<div class="row">
-    <div class="col-md-3">
-
-    </div>
-    <div class="col-md-3">
-        <p>Selling Price :</p>
-    </div>
-    <div class="col-md-3">
-        <input [(ngModel)]="productObj.sellingPrice" type="text" class="form-control form-control-sm" placeholder="Selling Price">
+        <input [(ngModel)]="vendorDetObj.village" type="text" class="form-control form-control-sm" placeholder="Village">
     </div>
 </div>
 
@@ -98,20 +91,22 @@
 
     </div>
     <div class="col-md-3">
-        <p>GST :</p>
+        <p>PIN Code :</p>
     </div>
     <div class="col-md-3">
-        <input [(ngModel)]="productObj.gstType" (ngModelChange)="getFilteredList(productObj.gstType,0)"
-            (blur)="toggleListDisplay(0,0,productObj)" (focus)="toggleListDisplay(1,0,productObj)"
-            (keyup)="onKeyPress($event,0,productObj)" type="text" class="form-control form-control-sm"
-            placeholder="GST">
-        <span class="custom-right-dropdown custom-side-nav card" [hidden]="!batchDropDowns[0]">
-            <small *ngFor="let batch of filteredGstRatesList; let j = index">
-                <a class="text-info custom-right-dropdown-content nav-link"
-                    (click)="selectItem(batch.gstName,0,productObj)"
-                    [ngClass]="{'select-item-style':j==selectedIndex}">{{batch.gstName}}</a>
-            </small>
-        </span>
+        <input [(ngModel)]="vendorDetObj.pinCode" type="text" class="form-control form-control-sm" placeholder="PIN code">
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-3">
+
+    </div>
+    <div class="col-md-3">
+        <p>Mobile No :</p>
+    </div>
+    <div class="col-md-3">
+        <input [(ngModel)]="vendorDetObj.phone" type="text" class="form-control form-control-sm" placeholder="Mobile No">
     </div>
 </div>
 <div class="row">
@@ -119,10 +114,11 @@
 
     </div>
     <div class="col-md-3">
-        <p>Manufacturer :</p>
+        <p>Email :</p>
     </div>
     <div class="col-md-3">
-        <input [(ngModel)]="productObj.manufacturer" type="text" class="form-control form-control-sm" placeholder="Manufacturer">
+        <input [(ngModel)]="vendorDetObj.email" type="text" class="form-control form-control-sm"
+        placeholder="Email">
     </div>
 </div>
 <div class="row">
@@ -130,10 +126,24 @@
 
     </div>
     <div class="col-md-3">
-        <p>Packaging :</p>
+        <p>GSTIN No :</p>
     </div>
     <div class="col-md-3">
-        <input [(ngModel)]="productObj.packaging" type="text" class="form-control form-control-sm" placeholder="Packaging">
+        <input [(ngModel)]="vendorDetObj.gstNo" type="text" class="form-control form-control-sm"
+        placeholder="GSTIN No">
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-3">
+
+    </div>
+    <div class="col-md-3">
+        <p>PAN No :</p>
+    </div>
+    <div class="col-md-3">
+        <input [(ngModel)]="vendorDetObj.panNo" type="text" class="form-control form-control-sm"
+        placeholder="Pan No">
     </div>
 </div><br>
 
@@ -142,7 +152,7 @@
 
     </div>
     <div class="col-md-3">
-        <span style="cursor: pointer" class="badge badge-pill bg-info"><a (click)="addProduct()"
+        <span style="cursor: pointer" class="badge badge-pill bg-info"><a (click)="addVendor()"
                 style="text-decoration: none; color: white;">Save
             </a></span>&nbsp;
         <span class="badge badge-pill bg-info"><a href="#" style="text-decoration: none; color: white;">Clear</a></span>

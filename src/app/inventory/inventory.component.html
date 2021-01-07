@@ -16,7 +16,8 @@
         <input class="form-control form-control-sm custom-input-style" type="text" placeholder="Quick Search">
     </div>
     <div class="col-md-2" style="text-align: right;">
-        <h5><span class="badge badge-pill bg-info"><a routerLink="/Add-product" style="text-decoration: none; color: white;">+ Add
+        <h5><span class="badge badge-pill bg-info"><a routerLink="/Add-product"
+                    style="text-decoration: none; color: white;">+ Add
                     product</a></span>
         </h5>
     </div>
@@ -26,42 +27,80 @@
     </div>
 </div>
 
+<!-- <table class="table">
+    <thead class="bg-info">
+        <th>#</th>
+        <th>Product Name</th>
+        <th>Category</th>
+        <th>Manufacturer</th>
+        <th>Unit</th>
+        <th>MRP</th>
+        <th>Selling Price</th>
+        <th>Packaging</th>
+        <th>Stock</th>
+        <th></th>
+    </thead>
+    <tbody>
+        <tr *ngFor="let product of pageOfProducts; let i = index">
+            <td>
+
+            </td>
+        </tr>
+    </tbody>
+</table> -->
 <div class="row list-custom-headings bg-info">
     <div class="col-md-1">#</div>
     <div class="col-md-2">Product Name</div>
-    <div class="col-md-3">Description</div>
     <div class="col-md-2">Category</div>
-    <div class="col-md-2">Unit</div>
+    <div class="col-md-1">Manufacturer</div>
+    <div class="col-md-1">Unit</div>
+    <div class="col-md-1">MRP</div>
+    <div class="col-md-1">Sells Price</div>
+    <div class="col-md-1">GST %</div>
+    <div class="col-md-1">Packaging</div>
     <div class="col-md-1">Stock</div>
 </div>
 <hr>
 
-<div *ngFor="let product of pageOfProducts; let i = index">
+<div *ngFor="let product of pageOfProducts; let i = index" >
 
     <div id="{{i}}">
         <div class="row" style="margin-top: 2%; text-align: center;">
             <div class="col-md-1"><input class="form-check-input" type="checkbox" value="" id="defaultCheck1"></div>
             <div class="col-md-2"> <input class="form-control form-control-sm custom-input-style" type="text"
                     [(ngModel)]="product.productName"></div>
-            <div class="col-md-3"><input class="form-control form-control-sm custom-input-style" type="text"
-                    [(ngModel)]="product.description"></div>
             <div class="col-md-2">
                 <select class="form-control form-control-sm custom-input-style" [(ngModel)]="product.category">
                     <option *ngFor="let category of categories" value="{{category}}">{{category}}</option>
                 </select>
             </div>
-            <div class="col-md-2"><input class="form-control form-control-sm custom-input-style" type="text"
+            <div class="col-md-1"><input class="form-control form-control-sm custom-input-style" type="text"
+                    [(ngModel)]="product.manufacturer"></div>
+            <div class="col-md-1"><input class="form-control form-control-sm custom-input-style" type="text"
                     [(ngModel)]="product.unit"></div>
+            <div class="col-md-1"><input class="form-control form-control-sm custom-input-style" type="text"
+                    [(ngModel)]="product.mrp"></div>
+            <div class="col-md-1"><input class="form-control form-control-sm custom-input-style" type="text"
+                    [(ngModel)]="product.sellingPrice"></div>
+                    <div class="col-md-1"><input class="form-control form-control-sm custom-input-style" type="text"
+                        [(ngModel)]="product.gst"></div>
             <div class="col-md-1">
 
                 <input class="form-control form-control-sm custom-input-style" type="text"
-                    [(ngModel)]="product.inStock">
+                    [(ngModel)]="product.packaging">
 
             </div>
             <div class="col-md-1">
-                <span class="badge badge-pill badge-info"><i class='fas fa-angle-down' id="{{i}}_down"
-                        (click)="expandProduct(i)"></i><i class='fas fa-angle-up' id="{{i}}_up"
-                        (click)="restoreProduct(i)" style="display: none;"></i></span>
+                <span class="badge badge-pill badge-danger"  style="margin-right: 10px; font-size: 13px;"
+                      >
+                    {{!product.inStock?0:product.inStock}}
+                </span>
+                <span class="badge badge-pill badge-light" style="border: 1px solid  rgb(23, 162, 184);">
+                    <i class='fas fa-angle-down' id="{{i}}_down"
+                        (click)="expandProduct(i)" style="color:  rgb(23, 162, 184);"></i>
+                    <i class='fas fa-angle-up' id="{{i}}_up"
+                        (click)="restoreProduct(i)" style="display: none;"></i>
+                </span>
             </div>
         </div>
 

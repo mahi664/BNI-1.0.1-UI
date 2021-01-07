@@ -6,7 +6,10 @@ export class InvetoryDetails {
 }
 
 export class ProductDet {
-  constructor(public productName: string, public description: string, public category: string, public inStock: number, public totalQty: number, public avilStockPercent: number, public unit: string, public inventories = []) { }
+  constructor(public productName: string, public description: string, public category: string, 
+    public inStock: number, public totalQty: number, public avilStockPercent: number, 
+    public unit: string, public mrp: number, public sellingPrice: number, public manufacturer: string,
+    public packaging: string,public inventories = []) { }
 }
 
 @Component({
@@ -17,42 +20,6 @@ export class ProductDet {
 export class InventoryComponent implements OnInit {
 
   products = [
-    // new ProductDet('Test Product 1','Test product description 1','Test Category 1',140,220,140*100/220,'Nos',[
-    //   new InvetoryDetails('XD2122',20,19,480,400,12, new Date(),new Date()),
-    //   new InvetoryDetails('XD2111',200,121,480,400,12, new Date(),new Date())
-    // ]),
-    // new ProductDet('Test Product 2','Test product description 2','Test Category 2',15,40,15*100/40,'Nos',[
-    //   new InvetoryDetails('XD2133',40,15,40,20,18, new Date(),new Date())
-    // ]),
-    // new ProductDet('Test Product 3','Test product description 3','Test Category 1',140,220,140*100/220,'Nos',[
-    //   new InvetoryDetails('XD2122',20,19,480,400,12, new Date(),new Date()),
-    //   new InvetoryDetails('XD2111',200,121,480,400,12, new Date(),new Date()),
-    //   new InvetoryDetails('XD2133',40,15,40,20,18, new Date(),new Date())
-    // ]),
-    // new ProductDet('Test Product 1','Test product description 1','Test Category 1',140,220,140*100/220,'Nos',[
-    //   new InvetoryDetails('XD2122',20,19,480,400,12, new Date(),new Date()),
-    //   new InvetoryDetails('XD2111',200,121,480,400,12, new Date(),new Date())
-    // ]),
-    // new ProductDet('Test Product 2','Test product description 2','Test Category 2',15,40,15*100/40,'Nos',[
-    //   new InvetoryDetails('XD2133',40,15,40,20,18, new Date(),new Date())
-    // ]),
-    // new ProductDet('Test Product 3','Test product description 3','Test Category 1',140,220,140*100/220,'Nos',[
-    //   new InvetoryDetails('XD2122',20,19,480,400,12, new Date(),new Date()),
-    //   new InvetoryDetails('XD2111',200,121,480,400,12, new Date(),new Date()),
-    //   new InvetoryDetails('XD2133',40,15,40,20,18, new Date(),new Date())
-    // ]),
-    // new ProductDet('Test Product 1','Test product description 1','Test Category 1',140,220,140*100/220,'Nos',[
-    //   new InvetoryDetails('XD2122',20,19,480,400,12, new Date(),new Date()),
-    //   new InvetoryDetails('XD2111',200,121,480,400,12, new Date(),new Date())
-    // ]),
-    // new ProductDet('Test Product 2','Test product description 2','Test Category 2',15,40,15*100/40,'Nos',[
-    //   new InvetoryDetails('XD2133',40,15,40,20,18, new Date(),new Date())
-    // ]),
-    // new ProductDet('Test Product 3','Test product description 3','Test Category 1',140,220,140*100/220,'Nos',[
-    //   new InvetoryDetails('XD2122',20,19,480,400,12, new Date(),new Date()),
-    //   new InvetoryDetails('XD2111',200,121,480,400,12, new Date(),new Date()),
-    //   new InvetoryDetails('XD2133',40,15,40,20,18, new Date(),new Date())
-    // ]),
   ];
   categories = ['Test Category 1', 'Test Category 2', 'Test Category 3', 'Test Category 4', 'Test Category 5'];
   constructor(private productService: ProductService) { }

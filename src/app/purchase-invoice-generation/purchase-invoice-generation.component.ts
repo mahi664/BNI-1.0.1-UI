@@ -69,12 +69,12 @@ export class PurchaseInvoiceGenerationComponent implements OnInit {
         console.log(this.prodName2GstMap);
       }
     );
-    this.vendorService.getVendorPhoneNos().subscribe(
-      response=>{
-        this.phoneNoList = response;
-        console.log("phone List "+this.phoneNoList);
-      }
-    );
+    // this.vendorService.getVendorPhoneNos().subscribe(
+    //   response=>{
+    //     this.phoneNoList = response;
+    //     console.log("phone List "+this.phoneNoList);
+    //   }
+    // );
   }
 
   @HostListener('window:keydown', ['$event'])
@@ -97,14 +97,14 @@ export class PurchaseInvoiceGenerationComponent implements OnInit {
     }
   }
 
-  save() {
-    console.log(this.vendorDet);
-    this.purchaseInvoiceService.addNewPurchaseOrder(this.vendorDet).subscribe(
-      response=>{
-        alert(response);
-      }
-    );
-  }
+  // save() {
+  //   console.log(this.vendorDet);
+  //   this.purchaseInvoiceService.addNewPurchaseOrder(this.vendorDet).subscribe(
+  //     response=>{
+  //       alert(response);
+  //     }
+  //   );
+  // }
 
   getFilteredList(inputItem: string) {
     if (inputItem === '')
