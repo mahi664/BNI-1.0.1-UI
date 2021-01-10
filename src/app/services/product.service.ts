@@ -34,4 +34,8 @@ export class ProductService {
   getProdName2GstMap(){
     return this.http.get<{}>("http://localhost:8080/get-product-gst-map");
   }
+
+  getProdName2IdMap(){
+    return this.http.get<{}>("http://localhost:8080/get-product-name-id-map");
+  }
 }

@@ -1,9 +1,9 @@
 <div class="row">
-  <div class="col-md-2" style="text-align: center;">
-    <h5><b>New Sales Invoice</b></h5>
-    <p class="text-info">#{{invoiceId}}</p>
+  <div class="col-md-3" style="text-align: center;">
+    <h5><b>New Purchase Order</b></h5>
+    <!-- <p class="text-info">#{{invoiceId}}</p> -->
   </div>
-  <div class="col-md-4" style="text-align: center;  ">
+  <!-- <div class="col-md-4" style="text-align: center;  ">
 
   </div>
   <div class="col-md-2" style="text-align: center;  ">
@@ -28,21 +28,60 @@
     <input class="form-control form-control-sm custom-input-style" type="text" 
     placeholder="City.." [(ngModel)]="vendorDet.city"><br>
     
-  </div>
+  </div> -->
 </div><br>
+<div class="row">
+  <div class="col-md-2">
+    <div class="form-group">
+      <label>Receipt No</label>
+      <input type="text" class="form-control form-control-sm custom-input-style"  
+       [(ngModel)]="vendorDet.invoices[0].invoiceId" aria-describedby="emailHelp" placeholder="Receipt No">
+    </div>
+  </div>
+  <div class="col-md-2">
+    <div class="form-group">
+      <label>Receipt Date</label>
+      <input type="date" class="form-control form-control-sm custom-input-style"  
+      [(ngModel)]="vendorDet.invoices[0].invoiceDate" aria-describedby="emailHelp" placeholder="Enter email">
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="form-group">
+      <label>Supplier Name</label>
+      <input type="text" class="form-control form-control-sm custom-input-style"  
+        [(ngModel)]="vendorDet.vendorName" (ngModelChange)="getFilteredVendorList(vendorDet.vendorName)" 
+        aria-describedby="emailHelp" placeholder="Supplier Name" (blur)="toggleVendorListDisplay(0,vendorDet)"
+        (focus)="toggleVendorListDisplay(1,vendorDet)" (keyup)="onKeyPressVendor($event,vendorDet)">
+      <span class="custom-right-dropdown custom-side-nav card" [hidden]="!vendorListDropDown">
+        <small *ngFor="let vendor of filteredVendorList; let j = index">
+          <a class="text-info custom-right-dropdown-content nav-link"
+            (click)="selectFromVendorDropDown(vendor.vendorName,vendor)"
+            [ngClass]="{'select-item-style':j==selectedIndex}">{{vendor.vendorName}}</a>
+        </small>
+      </span>
+    </div>
+  </div>
+  <div class="col-md-1">
+    <br>
+    <span class="badge badge-pill bg-info" style="margin-top: 12px;;"><a style="text-decoration: none; color: white;">New Supplier
+    </a></span>
+  </div>
+</div>
+
 <div class="row list-custom-headings bg-info">
   <div class="col-md-1">#</div>
   <div class="col-md-2"><small><b>Batch No.</b></small></div>
-  <div class="col-md-2"><small><b>Product</b></small></div>
+  <div class="col-md-2"><small><b>Item Name</b></small></div>
+  <div class="col-md-2"><small><b>Exp Date</b></small></div>
   <div class="col-md-1"><small><b>Qty</b></small></div>
-  <div class="col-md-1"><small><b>Price</b></small></div>
-  <div class="col-md-1"><small><b>Cost</b></small></div>
+  <!-- <div class="col-md-1"><small><b>Price</b></small></div> -->
+  <div class="col-md-1"><small><b>Rate</b></small></div>
   <div class="col-md-1"><small><b>GST</b></small></div>
-  <div class="col-md-1"><small><b>Disc</b></small></div>
+  <!-- <div class="col-md-1"><small><b>Disc</b></small></div> -->
   <div class="col-md-1"><small><b>Total</b></small></div>
 </div>
 <hr>
-<div *ngFor="let product of vendorDet.invoices[0].products; let i = index">
+<div *ngFor="let product of vendorDet.invoices[0].productsList; let i = index">
   <div id="{{i}}">
     <div class="row" style="margin-top: 2%; text-align: center;">
       <div class="col-md-1"><input class="form-check-input" type="checkbox" value="" id="defaultCheck1"></div>
@@ -53,22 +92,22 @@
       <div class="col-md-2">
         <small><input class="form-control form-control-sm custom-input-style" type="text"
             [(ngModel)]="product.productName" (ngModelChange)="getFilteredList(product.productName)"
-            placeholder="Product Name.." (blur)="toggleListDisplay(0,i,product)"
+            placeholder="Item Name.." (blur)="toggleListDisplay(0,i,product)"
             (focus)="toggleListDisplay(1,i,product)" (keyup)="onKeyPress($event,i,product)"></small>
-        <span class="custom-right-dropdown custom-side-nav card" [hidden]="!batchDropDowns[i]">
+        <span class="custom-right-dropdown custom-side-nav card" [hidden]="!batchDropDowns[i]" style="width: 85%;">
           <small *ngFor="let batch of filteredProductList; let j = index">
             <a class="text-info custom-right-dropdown-content nav-link" (click)="selectItem(batch,i,product)"
               [ngClass]="{'select-item-style':j==selectedIndex}">{{batch}}</a>
           </small>
         </span>
       </div>
-      <div class="col-md-1">
-        <small><input class="form-control form-control-sm custom-input-style" type="text" [(ngModel)]="product.qty"
-            placeholder="Qty.."></small>
+      <div class="col-md-2">
+        <small><input class="form-control form-control-sm custom-input-style" type="date" 
+          [(ngModel)]="product.expDate"  placeholder="Qty.."></small>
       </div>
       <div class="col-md-1">
-        <small><input class="form-control form-control-sm custom-input-style" type="text" [(ngModel)]="product.price"
-            placeholder="Price.."></small>
+        <small><input class="form-control form-control-sm custom-input-style" type="text" [(ngModel)]="product.quantity"
+            placeholder="Qty.."></small>
       </div>
       <div class="col-md-1">
         <small><input class="form-control form-control-sm custom-input-style" type="text" [(ngModel)]="product.cost"
@@ -79,51 +118,90 @@
             placeholder="GST"></small>
       </div>
       <div class="col-md-1 ">
-        <small><input class="form-control form-control-sm custom-input-style" type="text" [(ngModel)]="product.disc"
-            placeholder="Total"></small>
-      </div>
-      <div class="col-md-1 ">
-        <small><input class="form-control form-control-sm custom-input-style" type="text" [(ngModel)]="product.total"
-            placeholder="Total"></small>
+        <small><input class="form-control form-control-sm custom-input-style" type="text" 
+          [(ngModel)]="product.total" placeholder="Total" (focus)="calculateProdPrice(product,1)"></small>
       </div>
       <div class="col-md-1">
-        <small> <span class="badge badge-pill badge-info" *ngIf="vendorDet.invoices[0].products.length>1"
-            (click)="removeProductFromInvoice(product.batchNo)"><i class='fas fa-times'></i></span></small>
+        <small> <span class="badge badge-pill badge-info" *ngIf="vendorDet.invoices[0].productsList.length>1"
+            (click)="removeProductFromInvoice(product)"><i class='fas fa-times'></i></span></small>
       </div>
     </div>
   </div>
   <hr>
 </div>
 <div class="row">
-  <div class="col-md-11 text-info" style="bottom: 0; width: 100%;">
-    <!-- <nav aria-label="Page navigation example">
-        <ul class="pagination pagination-sm">
-          <li class="page-item" (click)="changePageContent(currPage-1)">
-            <a class="page-link" aria-label="Previous">
-              <span aria-hidden="true">&laquo;</span>
-              <span class="sr-only">Previous</span>
-            </a>
-          </li>
-          <li *ngFor="let page of pages" class="page-item" (click)="changePageContent(page)">
-            <a class="page-link" [ngClass]="page==currPage?'active-pagination':''">{{page}}</a>
-          </li>
-          <li class="page-item" (click)="changePageContent(currPage+1)">
-            <a class="page-link" aria-label="Next">
-              <span aria-hidden="true">&raquo;</span>
-              <span class="sr-only">Next</span>
-            </a>
-          </li>
-        </ul>
-      </nav> -->
+  <div class="col-md-11" style="bottom: 0; width: 100%;">
+    <div class="row">
+      <div class="col-md-2">
+        <div class="form-group">
+          <label>Disc Offered</label>
+          <input [(ngModel)]="vendorDet.invoices[0].discount" type="text" class="form-control form-control-sm custom-input-style"  
+            aria-describedby="emailHelp" placeholder="Enter email">
+        </div>
+      </div>
+      <div class="col-md-2">
+        <div class="form-group">
+          <label>GST Amt</label>
+          <input [(ngModel)]="vendorDet.invoices[0].gstAmt" type="text" class="form-control form-control-sm custom-input-style"  
+            aria-describedby="emailHelp" placeholder="Enter email">
+        </div>
+      </div>
+      <div class="col-md-2">
+        <div class="form-group">
+          <label>Total</label>
+          <input [(ngModel)]="vendorDet.invoices[0].totalAmt" type="text" class="form-control form-control-sm custom-input-style"  
+            aria-describedby="emailHelp" placeholder="Enter email">
+        </div>
+      </div>
+      <div class="col-md-2">
+        <div class="form-group">
+          <label>Paid Amt</label>
+          <input [(ngModel)]="vendorDet.invoices[0].paidAmt" type="text" class="form-control form-control-sm custom-input-style"  
+            aria-describedby="emailHelp" placeholder="Enter email">
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-2">
+        <label>Payment Mode</label>
+        <select [(ngModel)]="vendorDet.invoices[0].paymentType" class="form-control form-control-sm custom-input-style" style="height: 25px;">
+          <option value="Cash">Cash</option>
+          <option value="Card">Card</option>
+          <option value="Cheque">Cheque</option>
+        </select>
+      </div>
+      <div class="col-md-2" *ngIf="vendorDet.invoices[0].paymentType==='Cheque' ">
+        <div class="form-group">
+          <label>Bank Name</label>
+          <input [(ngModel)]="vendorDet.invoices[0].bankName" type="text" class="form-control form-control-sm custom-input-style"  
+            aria-describedby="emailHelp" placeholder="Enter email">
+        </div>
+      </div>
+      <div class="col-md-2" *ngIf="vendorDet.invoices[0].paymentType==='Cheque' ">
+        <div class="form-group">
+          <label>Acc No.</label>
+          <input [(ngModel)]="vendorDet.invoices[0].accNo" type="text" class="form-control form-control-sm custom-input-style"  
+            aria-describedby="emailHelp" placeholder="Enter email">
+        </div>
+      </div>
+      <div class="col-md-2" [hidden]="!(vendorDet.invoices[0].paymentType==='Cheque') ">
+        <div class="form-group">
+          <label>Cheque No.</label>
+          <input [(ngModel)]="vendorDet.invoices[0].chequeNo" type="text" class="form-control form-control-sm custom-input-style"  
+            aria-describedby="emailHelp" placeholder="Enter email">
+        </div>
+      </div>
+      
+    </div>
   </div>
   <div class="col-md-1 text-info">
     <span class="badge badge-pill bg-info"><a (click)="addProductIntoInvoice()"
         style="text-decoration: none; color: white;">Add More </a></span>
   </div>
-</div>
+</div><br>
 <div class="col-md-12" style="bottom: 0; width: 100%;">
   <h5>
-    <span class="badge badge-pill bg-info"><a style="text-decoration: none; color: white;">Save
+    <span class="badge badge-pill bg-info"><a style="text-decoration: none; color: white;" (click)="save()">Save
       </a></span>&nbsp;
     <span class="badge badge-pill bg-info"><a href="#" style="text-decoration: none; color: white;">Delete</a></span>
   </h5>

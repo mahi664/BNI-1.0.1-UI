@@ -135,6 +135,7 @@
                     <th>Invoice No</th>
                     <th>Invoice Date</th>
                     <th>Total Amt</th>
+                    <th>Paid Amt</th>
                     <th>Due Amt</th>
                     <!-- <th>Qty</th>
                     <th>In Stock</th>
@@ -142,16 +143,17 @@
                     <th>Mfg Date</th> -->
                 </thead>
                 <tbody>
-                    <tr *ngFor="let inventory of vendor.inventories; let i=index">
+                    <tr *ngFor="let purchaseOrder of vendor.purchaseOrdersList; let i=index">
                         <td>{{i+1}}</td>
-                        <td>{{inventory.batchNo}}</td>
-                        <td><i class='fas fa-rupee-sign'></i>{{inventory.sellingPrice}}</td>
-                        <td><i class='fas fa-rupee-sign'></i>{{inventory.purchasedCost}}</td>
-                        <td>{{inventory.gst}}%</td>
-                        <td>{{inventory.totalQty}}</td>
-                        <td>{{inventory.inStock}}</td>
-                        <td>{{inventory.expDate | date}}</td>
-                        <td>{{inventory.mfgDate | date}}</td>
+                        <td>{{purchaseOrder.invoiceId}}</td>
+                        <!-- <td><i class='fas fa-rupee-sign'></i>{{inventory.sellingPrice}}</td>
+                        <td><i class='fas fa-rupee-sign'></i>{{inventory.purchasedCost}}</td> -->
+                        <td>{{purchaseOrder.invoiceDate}}</td>
+                        <td>{{purchaseOrder.totalAmt}}</td>
+                        <td>{{purchaseOrder.paidAmt}}</td>
+                        <td>{{purchaseOrder.dueAmt}}</td>
+                        <!-- <td>{{inventory.expDate | date}}</td>
+                        <td>{{inventory.mfgDate | date}}</td> -->
                     </tr>
                 </tbody>
             </table>
