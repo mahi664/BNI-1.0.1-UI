@@ -1,3 +1,4 @@
+<app-loading *ngIf="isLoading">{{ isLoading }}</app-loading>
 <div class="row">
     <div class="col-md-2" style="text-align: center;">
         <h5><b>Inventory</b></h5>
@@ -51,55 +52,82 @@
 <div class="row list-custom-headings bg-info">
     <div class="col-md-1">#</div>
     <div class="col-md-2">Product Name</div>
-    <div class="col-md-2">Category</div>
-    <div class="col-md-1">Manufacturer</div>
+    <!-- <div class="col-md-2">Category</div> -->
+    <div class="col-md-2">Manufacturer</div>
     <div class="col-md-1">Unit</div>
     <div class="col-md-1">MRP</div>
-    <div class="col-md-1">Sells Price</div>
+    <div class="col-md-1">S. Price</div>
     <div class="col-md-1">GST %</div>
     <div class="col-md-1">Packaging</div>
     <div class="col-md-1">Stock</div>
+    <div class="col-md-1"></div>
 </div>
 <hr>
 
 <div *ngFor="let product of pageOfProducts; let i = index" >
 
     <div id="{{i}}">
-        <div class="row" style="margin-top: 2%; text-align: center;">
-            <div class="col-md-1"><input class="form-check-input" type="checkbox" value="" id="defaultCheck1"></div>
-            <div class="col-md-2"> <input class="form-control form-control-sm custom-input-style" type="text"
-                    [(ngModel)]="product.productName"></div>
-            <div class="col-md-2">
+        <div class="row" style="margin-top: 2%; text-align: left;">
+            <div class="col-md-1" style="text-align: center;"><input class="form-check-input" type="checkbox" value="" id="defaultCheck1"></div>
+            <div class="col-md-2"> 
+                <!-- <input class="form-control form-control-sm custom-input-style" type="text"
+                    [(ngModel)]="product.productName"> -->
+                {{product.productName}}
+                <p class="text-secondary" style="font-size: x-small; font-weight: normal;">
+                    {{product.description}} | {{product.category}}
+                </p>
+            </div>
+            <!-- <div class="col-md-2" style="margin-top: 0px;">
                 <select class="form-control form-control-sm custom-input-style" [(ngModel)]="product.category">
                     <option *ngFor="let category of categories" value="{{category}}">{{category}}</option>
                 </select>
-            </div>
-            <div class="col-md-1"><input class="form-control form-control-sm custom-input-style" type="text"
-                    [(ngModel)]="product.manufacturer"></div>
-            <div class="col-md-1"><input class="form-control form-control-sm custom-input-style" type="text"
-                    [(ngModel)]="product.unit"></div>
-            <div class="col-md-1"><input class="form-control form-control-sm custom-input-style" type="text"
-                    [(ngModel)]="product.mrp"></div>
-            <div class="col-md-1"><input class="form-control form-control-sm custom-input-style" type="text"
-                    [(ngModel)]="product.sellingPrice"></div>
-                    <div class="col-md-1"><input class="form-control form-control-sm custom-input-style" type="text"
-                        [(ngModel)]="product.gst"></div>
-            <div class="col-md-1">
-
-                <input class="form-control form-control-sm custom-input-style" type="text"
-                    [(ngModel)]="product.packaging">
-
+                {{product.category}}
+            </div> -->
+            <div class="col-md-2">
+                <!-- <input class="form-control form-control-sm custom-input-style" type="text"
+                    [(ngModel)]="product.manufacturer"> -->
+                {{product.manufacturer}}
             </div>
             <div class="col-md-1">
-                <span class="badge badge-pill badge-danger"  style="margin-right: 10px; font-size: 13px;"
-                      >
+                <!-- <input class="form-control form-control-sm custom-input-style" type="text"
+                    [(ngModel)]="product.unit"> -->
+                {{product.unit}}
+            </div>
+            <div class="col-md-1">
+                <!-- <input class="form-control form-control-sm custom-input-style" type="text"
+                    [(ngModel)]="product.mrp"> -->
+                {{product.mrp}}
+            </div>
+            <div class="col-md-1" >
+                <!-- <input class="form-control form-control-sm custom-input-style" type="text"
+                    [(ngModel)]="product.sellingPrice"> -->
+                {{product.sellingPrice}}
+            </div>
+            <div class="col-md-1">
+                <!-- <input class="form-control form-control-sm custom-input-style" type="text"
+                        [(ngModel)]="product.gst"> -->
+                {{product.gst==null?0:product.gst}}
+            </div>
+            <div class="col-md-1">
+                <!-- <input class="form-control form-control-sm custom-input-style" type="text"
+                    [(ngModel)]="product.packaging"> -->
+                {{product.packaging}}
+            </div>
+            <div class="col-md-1">
+                <span class="badge badge-pill" [ngClass]="{'badge-success':!isStockInDanger(product),'badge-danger':isStockInDanger(product)}"  style="margin-right: 10px; font-size: 13px;">
                     {{!product.inStock?0:product.inStock}}
                 </span>
+            </div>
+            <div class="col-md-1" >
+                <span class="badge badge-pill badge-light" style="border: 1px solid  rgb(23, 162, 184); margin-right: 5px;">
+                    <i class='fas fa-edit' style="color:  rgb(23, 162, 184);"></i>
+                </span>
+                
                 <span class="badge badge-pill badge-light" style="border: 1px solid  rgb(23, 162, 184);">
                     <i class='fas fa-angle-down' id="{{i}}_down"
                         (click)="expandProduct(i)" style="color:  rgb(23, 162, 184);"></i>
                     <i class='fas fa-angle-up' id="{{i}}_up"
-                        (click)="restoreProduct(i)" style="display: none;"></i>
+                        (click)="restoreProduct(i)" style="display: none; color:  rgb(23, 162, 184);"></i>
                 </span>
             </div>
         </div>
@@ -109,28 +137,33 @@
                 <thead class="bg-info">
                     <th>#</th>
                     <th>Batch No.</th>
-                    <th>Price</th>
+                    <!-- <th>Price</th> -->
                     <th>Cost</th>
-                    <th>GST</th>
+                    <!-- <th>GST</th> -->
                     <th>Qty</th>
                     <th>In Stock</th>
                     <th>Exp Date</th>
-                    <th>Mfg Date</th>
+                    <th> </th>
                 </thead>
                 <tbody>
                     <tr *ngFor="let inventory of product.inventories; let i=index">
                         <td>{{i+1}}</td>
                         <td>{{inventory.batchNo}}</td>
-                        <td><i class='fas fa-rupee-sign'></i>{{inventory.sellingPrice}}</td>
+                        <!-- <td><i class='fas fa-rupee-sign'></i>{{inventory.sellingPrice}}</td> -->
                         <td><i class='fas fa-rupee-sign'></i>{{inventory.purchasedCost}}</td>
-                        <td>{{inventory.gst}}%</td>
+                        <!-- <td>{{inventory.gst}}%</td> -->
                         <td>{{inventory.totalQty}}</td>
                         <td>{{inventory.inStock}}</td>
                         <td>{{inventory.expDate | date}}</td>
-                        <td>{{inventory.mfgDate | date}}</td>
+                        <td>
+                            <span class="badge badge-pill badge-warning"  style="margin-right: 10px; font-size: 13px;">
+                                
+                            </span>
+                        </td>
                     </tr>
                 </tbody>
             </table>
+            <!-- <p style="margin-left: 90%;" *ngIf="product.inventories.lenght>0"><a routerLink="#">View All..</a></p> -->
         </div>
         <hr>
     </div>

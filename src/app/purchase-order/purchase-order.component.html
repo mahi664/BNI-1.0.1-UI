@@ -29,25 +29,27 @@
 			<div class="col-md-2">Vendor</div>
 			<div class="col-md-1">GST</div>
 			<div class="col-md-1">Total</div>
-			<div class="col-md-2">Payment Status</div>
+			<div class="col-md-1">Due Amt</div>
+			<div class="col-md-1">Pyment</div>
 		</div>
 		<hr>
 
-    <div *ngFor="let invoice of pageOfInvoices; let i = index">
+    <div *ngFor="let vendor of pageOfInvoices; let i = index">
 		<div id="{{i}}">
 			<div class="row" style="margin-top: 2%; text-align: center;">
 				<div class="col-md-1"><input class="form-check-input" type="checkbox" value="" id="defaultCheck1"></div>
-					<div class="col-md-2">{{invoice.invoiceId}}</div>
-					<div class="col-md-2">{{invoice.invoiceDate | date}}</div>
-					<div class="col-md-2">{{invoice.vendorName}}</div>
-          <div class="col-md-1"><p><i class='fas fa-rupee-sign'></i>{{invoice.gst}}</p></div>
+					<div class="col-md-2">{{vendor.invoices[0].invoiceId}}</div>
+					<div class="col-md-2">{{vendor.invoices[0].invoiceDate | date}}</div>
+					<div class="col-md-2">{{vendor.vendorName}}</div>
+          			<div class="col-md-1"><p><i class='fas fa-rupee-sign'></i>{{vendor.invoices[0].gstAmt}}</p></div>
 					<div class="col-md-1">
-						<p><i class='fas fa-rupee-sign'></i>{{invoice.total}}</p>
+						<p><i class='fas fa-rupee-sign'></i>{{vendor.invoices[0].totalAmt}}</p>
 					</div>
-					<div class="col-md-2 ">
-						<select class="form-control form-control-sm custom-input-style" [(ngModel)]="invoice.paymentStatus">
-                <option *ngFor="let paymentStatus of paymentsStatuses" value="{{paymentStatus}}">{{paymentStatus}}</option>
-            </select>
+					<div class="col-md-1 ">
+						<p><i class='fas fa-rupee-sign'></i>{{vendor.invoices[0].dueAmt}}</p>
+					</div>
+					<div class="col-md-1 ">
+						<p>{{vendor.invoices[0].paymentType}}</p>
 					</div>
 					<div class="col-md-1">
 						<span class="badge badge-pill badge-info"><i class='fas fa-angle-down' id="{{i}}_down" (click)="expandProduct(i)"></i><i class='fas fa-angle-up' id="{{i}}_up" (click)="restoreProduct(i)" style="display: none;"></i></span>
@@ -60,27 +62,27 @@
 							<th>Batch No.</th>
               <th>Product</th>
               <th>Cost</th>
-							<th>Price</th>
+							<!-- <th>Price</th> -->
 							<th>Qty</th>
               <th>GST</th>
 							<th>Disc</th>
 							<th>Total</th>
-              <th>Mfg Date</th>
+              <!-- <th>Mfg Date</th> -->
               <th>Exp Date</th>
               <th>Ret.Qty</th>
 						</thead>
 						<tbody>
-							<tr *ngFor="let product of invoice.productsDet">
+							<tr *ngFor="let product of vendor.invoices[0].productsList">
 								<td><input class="form-check-input" type="checkbox" value="" id="defaultCheck1"></td>
 								<td>{{product.batchNo}}</td>
                 <td>{{product.productName}}</td>
 								<td><i class='fas fa-rupee-sign'></i>{{product.cost}}</td>
-                <td><i class='fas fa-rupee-sign'></i>{{product.price}}</td>
+                <!-- <td><i class='fas fa-rupee-sign'></i>{{product.price}}</td> -->
 								<td>x {{product.quantity}}</td>
-                <td>{{product.gst}}</td>
+                <td>{{product.gst}}%</td>
 								<td style="color: red;">{{product.discount}}%</td>
 								<td><i class='fas fa-rupee-sign'></i>{{product.total}}</td>
-                <td>{{product.mfgDate | date}}</td>
+                <!-- <td>{{product.mfgDate | date}}</td> -->
                 <td>{{product.expDate | date}}</td>
                 <td style="width:5%;"><input class="form-control form-control-sm custom-input-style" type="text"></td>
 							</tr>

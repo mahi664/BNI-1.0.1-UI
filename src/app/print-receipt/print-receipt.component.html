@@ -1,0 +1,147 @@
+<div class="row" style="text-align: center; margin-left: 50%; margin-bottom: 2%;" id="printIcon">
+    <h4 style="cursor: pointer;" (click)='printReceipt()'><i class='fas fa-print'></i></h4>
+</div> 
+<div class="container" id="print-content" style="border: 1px solid rgba(222,226,230,1);">
+           
+    <div class="row">
+        <div class="col-md-4" style="border-right: 1px solid rgba(222,226,230,1);">
+            <div class="row" style="border-bottom: 1px solid rgba(222,226,230,1);">
+                <div class="col-md-12">
+                   <h6>Sales Invoice</h6>
+                </div>
+            </div>
+            <p>Fertilizer L.No : LAFD09010177</p>
+            <p>Insecticide L.No : LAFD09010177</p>
+            <p>Seed L.No : LAFD09010177</p>
+        </div>
+        <div class="col-md-8" style="text-align: center;">
+            <h4>Maha Krishi Agri Clinic</h4>
+            <p>Shevgaon-Paithan road, near Nityaseva hospital, Shevgaon, Ahmednagar 414001</p>
+            <p>(0241) - 2359447, 9898787678</p>
+            <h5>GST No: 27AADFK9477E1Z0</h5>
+        </div>
+    </div>
+    <div class="row" style="border-top: 1px solid rgba(222,226,230,1);">
+        <div class="col-md-8" style="border-right: 1px solid rgba(222,226,230,1)">
+            <table>
+                <tr>
+                    <td>Customer Name </td>
+                    <td> : {{customerDet.customerName}}</td>
+                </tr>
+                <tr>
+                    <td>Address </td>
+                    <td> : GHOTAN</td>
+                </tr>
+                <tr>
+                    <td>GST No </td>
+                    <td> : 27AADFK9477E1Z0</td>
+                    <td>
+                        
+                    </td>
+                    <td>Mobile No </td>
+                    <td> : 8600429732</td>
+                </tr>
+            </table>
+        </div>
+        <div class="col-md-4">
+            <table>
+                <tr>
+                    <td>Invoice No </td>
+                    <td> : SL20210001</td>
+                </tr>
+                <tr>
+                    <td>Date </td>
+                    <td> : 02/02/2021</td>
+                </tr>
+                <tr>
+                    <td>DC No </td>
+                    <td> : </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <div class="row" style="border-top: 1px solid rgba(222,226,230,1)">
+        <table style="width: 100%;" class="table table-bordered">
+            <thead >
+                <th>Item Name</th>
+                <th>Batch No</th>
+                <th>Pkg</th>
+                <th>Qty</th>
+                <th>Rate</th>
+                <th>Amount</th>
+                <th>GST%</th>
+                <th>C-GST</th>
+                <th>S-GST</th>
+                <th>Total</th>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Test Product 1</td>
+                    <td>XD34545</td>
+                    <td>300 gm</td>
+                    <td>2</td>
+                    <td>525.00</td>
+                    <td>937.50</td>
+                    <td>12.00</td>
+                    <td>56.25</td>
+                    <td>56.25</td>
+                    <td>1050.00</td>
+                </tr>
+                <tr style="border: 1px solid rgba(222,226,230,1);">
+                    <td>Test Product 1</td>
+                    <td>XD34545</td>
+                    <td>40 kg</td>
+                    <td>1</td>
+                    <td>650.00</td>
+                    <td>809.52</td>
+                    <td>5.00</td>
+                    <td>20.24</td>
+                    <td>20.24</td>
+                    <td>850.00</td>
+                </tr>
+                
+                <tr>
+                    <td colspan="3">Rs. One Thousand Nine Hundred Only..</td>
+                    <td>3</td>
+                    <td colspan="2">1747.02</td>
+                    <td colspan="2">76.49</td>
+                    <td>76.49</td>
+                    <td>1900.00</td>
+                </tr>
+                <tr>
+                    <td colspan="6">
+                        <p style="color: gray">
+                            Client Note: <br>
+                            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+                        </p><br>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <hr>
+                                <p>Customer Signature</p>
+                            </div>
+                            <div class="col-md-6">
+                                <!-- <img src="sign.jpg"> -->
+                                <hr>
+                                <p>Authority Signature</p>
+                            </div>
+                        </div>
+                    </td>
+                    <td colspan="4">
+                        <div class="row">
+                            <div class="col-md-6">
+                                Discount <br>
+                                Paid <br>
+                                Unpaid
+                            </div>
+                            <div class="col-md-6">
+                                : 0.00 <br>
+                                : 1900.00 <br>
+                                : 0.00
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

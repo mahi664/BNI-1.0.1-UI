@@ -1,3 +1,4 @@
+import { DatePipe } from '@angular/common';
 import { Component, OnInit, HostListener } from '@angular/core';
 import { ProductService } from '../services/product.service';
 import { PurchaseInvoiceService } from '../services/purchase-invoice.service';
@@ -6,11 +7,11 @@ import { VendorService } from '../services/vendor.service';
 export class product {
   constructor(public productId: number,public batchNo: string, public productName: String, public quantity: number, 
     public price: number, public cost: number, public gst: number, public total: number, 
-    public disc: number,public expDate: Date) { }
+    public disc: number,public expDate: any, public unit:string, public packaging:string, public manufacturer: string,public sellingPrice: number) { }
 }
 
 export class purchaseOrderReceipt{
-  constructor(public invoiceId: string, public invoiceDate: Date,public gstAmt: number,
+  constructor(public invoiceId: string, public invoiceDate: any,public gstAmt: number,
     public totalAmt: number, public discount:number, public paidAmt: number, public paymentType: string,
     public bankName: string,public accNo: string,public chequeNo: string, public productsList: product[]){}
 }
@@ -32,11 +33,13 @@ export class prodToGstMap {
 @Component({
   selector: 'app-purchase-invoice-generation',
   templateUrl: './purchase-invoice-generation.component.html',
-  styleUrls: ['./purchase-invoice-generation.component.css']
+  styleUrls: ['./purchase-invoice-generation.component.css'],
+  providers: [DatePipe]
 })
 export class PurchaseInvoiceGenerationComponent implements OnInit {
 
   public keypressed;
+  isLoading = false;
   invoiceId = 20200001;
   invoiceDate = new Date();
   // products = [];
@@ -54,14 +57,17 @@ export class PurchaseInvoiceGenerationComponent implements OnInit {
 
   constructor(private productService: ProductService,
     private vendorService: VendorService,
-    private purchaseInvoiceService : PurchaseInvoiceService) { }
+    private purchaseInvoiceService : PurchaseInvoiceService,
+    private datePipe: DatePipe) { }
 
   ngOnInit() {
     this.vendorDet = new VendorDets(-1,"","","","","","",0,[]);
     this.vendorDet.invoices.push(new purchaseOrderReceipt("",new Date(),0,0,0,0,"","","","",[]));
-    this.vendorDet.invoices[0].productsList.push(new product(0,"","",0,0,0,0,0,0,new Date()));
+    this.vendorDet.invoices[0].productsList.push(new product(0,"","",0,0,0,0,0,0,new Date(),"","","",0));
     // this.batchDropDowns.push(false);
     // this.filteredBatchNos=[];
+    this.vendorDet.invoices[0].invoiceDate = this.datePipe.transform(this.vendorDet.invoices[0].invoiceDate,'yyyy-MM-dd');
+
     this.productService.getProductNames().subscribe(
       response => {
         this.productList = response;
@@ -79,7 +85,7 @@ export class PurchaseInvoiceGenerationComponent implements OnInit {
         this.prodName2IdMap = response;
         // console.log(this.prodName2GstMap);
       }
-    );
+    ); 
     this.vendorService.getVendorList().subscribe(
       response=>{
         this.vendorList = response;
@@ -100,7 +106,7 @@ export class PurchaseInvoiceGenerationComponent implements OnInit {
 
   addProductIntoInvoice() {
     this.batchDropDowns.push(false);
-    this.vendorDet.invoices[0].productsList.push(new product(0,"", "", 0, 0, 0, 0, 0, 0,new Date()));
+    this.vendorDet.invoices[0].productsList.push(new product(0,"", "", 0, 0, 0, 0, 0, 0,new Date(),"","","",0));
   }
 
   removeProductFromInvoice(productIn: product) {
@@ -114,9 +120,11 @@ export class PurchaseInvoiceGenerationComponent implements OnInit {
   }
 
   save() {
-    console.log(this.vendorDet);
+    //console.log(this.vendorDet);
+    this.isLoading = true;
     this.purchaseInvoiceService.savePurchaseInvoice(this.vendorDet).subscribe(
       response =>{
+        this.isLoading=false;
         alert(response);
       }
     );
@@ -138,7 +146,7 @@ export class PurchaseInvoiceGenerationComponent implements OnInit {
   toggleListDisplay(sender: number, index: number, product) {
 
     if (sender === 1) {
-      // this.selectedIndex = -1;
+      this.selectedIndex = -1;
       this.batchDropDowns[index] = true;
       this.getFilteredList(product.productName);
     } else {
@@ -156,6 +164,7 @@ export class PurchaseInvoiceGenerationComponent implements OnInit {
 
   toggleVendorListDisplay(sender: number, vendorDet: VendorDets){
     if(sender === 1){
+      this.selectedIndex = -1;
       this.vendorListDropDown = true;
       this.getFilteredVendorList(vendorDet.vendorName);
     } else{
@@ -164,8 +173,8 @@ export class PurchaseInvoiceGenerationComponent implements OnInit {
         // this.listHidden = true;
         if(this.selectedIndex!=-1){
           this.vendorDet.vendorName = vendorDet.vendorName;
-          this.vendorDet.vendorId = this.vendorList[this.selectedIndex].vendorId;
-        
+          let vObj = this.vendorList.filter((item)=>item.vendorName.toLowerCase().includes(this.vendorDet.vendorName.toLowerCase()));
+          this.vendorDet.vendorId = vObj[0].vendorId;
         }
         this.vendorListDropDown = false;
         // console.log(this.vendorDet);

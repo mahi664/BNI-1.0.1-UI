@@ -1,15 +1,13 @@
-<app-loading *ngIf="isLoading">{{ isLoading }}</app-loading>
-<app-alerts></app-alerts>
 <div class="row">
     <div class="col-md-3">
 
     </div>
     <div class="col-md-3">
-        <p>Vendor Name :</p>
+        <p>Customer Name :</p>
     </div>
     <div class="col-md-3">
-        <input [(ngModel)]="vendorDetObj.vendorName" type="text" class="form-control form-control-sm"
-            placeholder="Vendor Name">
+        <input [(ngModel)]="customerDetObj.customerName" type="text" class="form-control form-control-sm"
+            placeholder="Customer Name">
     </div>
 </div>
 
@@ -21,7 +19,7 @@
         <p>UID No :</p>
     </div>
     <div class="col-md-3">
-        <input [(ngModel)]="vendorDetObj.uidNo" type="text" class="form-control form-control-sm"
+        <input [(ngModel)]="customerDetObj.uidNo" type="text" class="form-control form-control-sm"
             placeholder="UID No">
     </div>
 </div>
@@ -34,7 +32,7 @@
         <p>State :</p>
     </div>
     <div class="col-md-3">
-        <input [(ngModel)]="vendorDetObj.state" type="text" class="form-control form-control-sm"
+        <input [(ngModel)]="customerDetObj.state" type="text" class="form-control form-control-sm"
             placeholder="State">
     </div>
 </div>
@@ -47,7 +45,7 @@
         <p>District :</p>
     </div>
     <div class="col-md-3">
-        <input [(ngModel)]="vendorDetObj.district" type="text" class="form-control form-control-sm"
+        <input [(ngModel)]="customerDetObj.district" type="text" class="form-control form-control-sm"
             placeholder="District">
     </div>
 </div>
@@ -60,7 +58,7 @@
         <p>City :</p>
     </div>
     <div class="col-md-3">
-        <input [(ngModel)]="vendorDetObj.city" type="text" class="form-control form-control-sm"
+        <input [(ngModel)]="customerDetObj.city" type="text" class="form-control form-control-sm"
         placeholder="City">
         <!-- <input [(ngModel)]="productObj.categoryName" (ngModelChange)="getFilteredList(productObj.categoryName,1)"
             (blur)="toggleListDisplay(0,1,productObj)" (focus)="toggleListDisplay(1,1,productObj)"
@@ -84,7 +82,7 @@
         <p>Village :</p>
     </div>
     <div class="col-md-3">
-        <input [(ngModel)]="vendorDetObj.village" type="text" class="form-control form-control-sm" placeholder="Village">
+        <input [(ngModel)]="customerDetObj.village" type="text" class="form-control form-control-sm" placeholder="Village">
     </div>
 </div>
 
@@ -96,7 +94,7 @@
         <p>PIN Code :</p>
     </div>
     <div class="col-md-3">
-        <input [(ngModel)]="vendorDetObj.pinCode" type="text" class="form-control form-control-sm" placeholder="PIN code">
+        <input [(ngModel)]="customerDetObj.pinCode" type="text" class="form-control form-control-sm" placeholder="PIN code">
     </div>
 </div>
 
@@ -108,7 +106,7 @@
         <p>Mobile No :</p>
     </div>
     <div class="col-md-3">
-        <input [(ngModel)]="vendorDetObj.phone" type="text" class="form-control form-control-sm" placeholder="Mobile No">
+        <input [(ngModel)]="customerDetObj.phone" type="text" class="form-control form-control-sm" placeholder="Mobile No">
     </div>
 </div>
 <div class="row">
@@ -119,7 +117,7 @@
         <p>Email :</p>
     </div>
     <div class="col-md-3">
-        <input [(ngModel)]="vendorDetObj.email" type="text" class="form-control form-control-sm"
+        <input [(ngModel)]="customerDetObj.email" type="text" class="form-control form-control-sm"
         placeholder="Email">
     </div>
 </div>
@@ -131,7 +129,7 @@
         <p>GSTIN No :</p>
     </div>
     <div class="col-md-3">
-        <input [(ngModel)]="vendorDetObj.gstNo" type="text" class="form-control form-control-sm"
+        <input [(ngModel)]="customerDetObj.gstNo" type="text" class="form-control form-control-sm"
         placeholder="GSTIN No">
     </div>
 </div>
@@ -144,7 +142,7 @@
         <p>PAN No :</p>
     </div>
     <div class="col-md-3">
-        <input [(ngModel)]="vendorDetObj.panNo" type="text" class="form-control form-control-sm"
+        <input [(ngModel)]="customerDetObj.panNo" type="text" class="form-control form-control-sm"
         placeholder="Pan No">
     </div>
 </div><br>
@@ -154,7 +152,7 @@
 
     </div>
     <div class="col-md-3">
-        <span style="cursor: pointer" class="badge badge-pill bg-info"><a (click)="addVendor()"
+        <span style="cursor: pointer" class="badge badge-pill bg-info"><a (click)="addCustomer()"
                 style="text-decoration: none; color: white;">Save
             </a></span>&nbsp;
         <span class="badge badge-pill bg-info"><a href="#" style="text-decoration: none; color: white;">Clear</a></span>

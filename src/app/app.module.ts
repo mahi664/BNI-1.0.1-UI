@@ -21,6 +21,11 @@ import { AddProductComponent } from './add-product/add-product.component';
 import { AddGstComponent } from './add-gst/add-gst.component';
 import { VendorComponent } from './vendor/vendor.component';
 import { AddVendorComponent } from './add-vendor/add-vendor.component';
+import { AddCustomerComponent } from './add-customer/add-customer.component';
+import { PrintReceiptComponent } from './print-receipt/print-receipt.component';
+import { SalesInvoiceService } from './services/sales-invoice.service';
+import { LoadingComponent } from './loading/loading.component';
+import { AlertsComponent } from './alerts/alerts.component';
 // import { GoogleChartsModule } from "angular-google-charts";
 
 @NgModule({
@@ -41,7 +46,11 @@ import { AddVendorComponent } from './add-vendor/add-vendor.component';
     AddProductComponent,
     AddGstComponent,
     VendorComponent,
-    AddVendorComponent
+    AddVendorComponent,
+    AddCustomerComponent,
+    PrintReceiptComponent,
+    LoadingComponent,
+    AlertsComponent
   ],
   imports: [
     BrowserModule,
@@ -50,7 +59,7 @@ import { AddVendorComponent } from './add-vendor/add-vendor.component';
     HttpClientModule
     // s
   ],
-  providers: [],
+  providers: [SalesInvoiceService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

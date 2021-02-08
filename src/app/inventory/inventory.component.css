@@ -1,5 +1,7 @@
 *{
-    font-size: 12px;
+  font-size: small;
+  
+  font-family: sans-serif;
 }
 .custom-input-style{
     border: 1px solid rgb(23, 162, 184);
@@ -7,8 +9,8 @@
  }
  .list-custom-headings{
    margin-top: 3%; 
-   font-weight: bold; 
-   text-align: center;
+   font-weight: bolder; 
+   text-align: left;
    padding: 1%;
    border-radius: 5px;
  }

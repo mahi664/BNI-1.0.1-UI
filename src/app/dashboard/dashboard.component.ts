@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { CommonServiceService } from '../services/common-service.service';
 
 export class weekDet{
   constructor(public weekStartDate: string,public weekEndDate: string, public month : string, public secMonth: string, public weekSale: number){}
@@ -82,9 +83,11 @@ export class DashboardComponent implements OnInit {
    widthYrly = 330;
    heightYrly = 400;
 
-  constructor() { }
-
+  constructor(private commonService: CommonServiceService) { }
+  isLoading = false;
   ngOnInit() {
+    this.isLoading = true;
+    setTimeout( () => this.isLoading = false, 2000 )
   }
 
 }

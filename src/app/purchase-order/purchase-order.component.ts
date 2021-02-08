@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { VendorDets } from '../purchase-invoice-generation/purchase-invoice-generation.component';
+import { PurchaseInvoiceService } from '../services/purchase-invoice.service';
 
 export class InvoiceDet{
-  constructor(public invoiceId: string, public invoiceDate: Date, public vendorName: string, public gst: number, public total: number,public paymentStatus: string, public productsDet=[]){}
+  constructor(public invoiceId: string, public invoiceDate: Date, public vendorName: string, 
+    public gst: number, public total: number,public paymentStatus: string, public productsDet=[]){}
 }
 
 export class ProductDet{
@@ -14,46 +17,10 @@ export class ProductDet{
   styleUrls: ['./purchase-order.component.css']
 })
 export class PurchaseOrderComponent implements OnInit {
-  invoices = [
-    new InvoiceDet('2020001',new Date(),'Test Vendor 1',1260,9760,'Paid',[
-      new ProductDet('XD2122','Test Product 1',new Date(),new Date(),1000,800,2,240,0,2240),
-      new ProductDet('XD2125','Test Product 2',new Date(),new Date(),500,400,3,120,0,1620),
-      new ProductDet('XD2133','Test Product 3',new Date(),new Date(),5000,4500,1,900,0,5900)
-    ]),
-    new InvoiceDet('2020002',new Date(),'Test Vendor 2',360,3860,'Partially Paid',[
-       new ProductDet('XD2122','Test Product 1',new Date(),new Date(),1000,800,2,240,0,2240),
-      new ProductDet('XD2125','Test Product 2',new Date(),new Date(),500,400,3,120,0,1620)
-    ]),
-    new InvoiceDet('2020003',new Date(),'Test Vendor 1',240,2240,'Unpaid',[
-      new ProductDet('XD2122','Test Product 1',new Date(),new Date(),1000,800,2,240,0,2240)
-    ]),
-    new InvoiceDet('2020001',new Date(),'Test Vendor 1',1260,9760,'Paid',[
-      new ProductDet('XD2122','Test Product 1',new Date(),new Date(),1000,800,2,240,0,2240),
-      new ProductDet('XD2125','Test Product 2',new Date(),new Date(),500,400,3,120,0,1620),
-      new ProductDet('XD2133','Test Product 3',new Date(),new Date(),5000,4500,1,900,0,5900)
-    ]),
-    new InvoiceDet('2020002',new Date(),'Test Vendor 2',360,3860,'Partially Paid',[
-       new ProductDet('XD2122','Test Product 1',new Date(),new Date(),1000,800,2,240,0,2240),
-      new ProductDet('XD2125','Test Product 2',new Date(),new Date(),500,400,3,120,0,1620)
-    ]),
-    new InvoiceDet('2020003',new Date(),'Test Vendor 1',240,2240,'Unpaid',[
-      new ProductDet('XD2122','Test Product 1',new Date(),new Date(),1000,800,2,240,0,2240)
-    ]),
-    new InvoiceDet('2020001',new Date(),'Test Vendor 1',1260,9760,'Paid',[
-      new ProductDet('XD2122','Test Product 1',new Date(),new Date(),1000,800,2,240,0,2240),
-      new ProductDet('XD2125','Test Product 2',new Date(),new Date(),500,400,3,120,0,1620),
-      new ProductDet('XD2133','Test Product 3',new Date(),new Date(),5000,4500,1,900,0,5900)
-    ]),
-    new InvoiceDet('2020002',new Date(),'Test Vendor 2',360,3860,'Partially Paid',[
-       new ProductDet('XD2122','Test Product 1',new Date(),new Date(),1000,800,2,240,0,2240),
-      new ProductDet('XD2125','Test Product 2',new Date(),new Date(),500,400,3,120,0,1620)
-    ]),
-    new InvoiceDet('2020003',new Date(),'Test Vendor 1',240,2240,'Unpaid',[
-      new ProductDet('XD2122','Test Product 1',new Date(),new Date(),1000,800,2,240,0,2240)
-    ])
-  ];
+  
+  vendorDets : VendorDets[] = []; 
   paymentsStatuses = ['Paid','Unpaid','Partially Paid'];
-  constructor() { }
+  constructor(private purchaseInvoiceService: PurchaseInvoiceService) { }
 
   noOfPages=0;
   i;
@@ -61,15 +28,21 @@ export class PurchaseOrderComponent implements OnInit {
   pages=[];
   currPage=1;
   ngOnInit() {
-    this.noOfPages = Math.ceil(this.invoices.length/5);
-    for(this.i=1;this.i<=this.noOfPages;this.i++){
-      this.pages.push(this.i);
-    }
-    this.pageOfInvoices = this.invoices.slice(0,5);
+    this.purchaseInvoiceService.getPurchaseInvoices().subscribe(
+      response =>{
+        console.log(response);
+        this.vendorDets = response;
+        this.noOfPages = Math.ceil(this.vendorDets.length/5);
+        for(this.i=1;this.i<=this.noOfPages;this.i++){
+          this.pages.push(this.i);
+        }
+        this.pageOfInvoices = this.vendorDets.slice(0,5);
+      }
+    );
   }
 
   expandProduct(entity_id){
-    console.log(this.invoices);
+    console.log(this.vendorDets);
       var content_id = entity_id+"_content";
       var product_row_id = entity_id;
       var product_up_button_id = entity_id+"_up";
@@ -96,7 +69,7 @@ export class PurchaseOrderComponent implements OnInit {
       pageNo=1;
     else if(pageNo>=this.noOfPages)
       pageNo=this.noOfPages;
-    this.pageOfInvoices = this.invoices.slice((pageNo-1)*5,(pageNo-1)*5+5);
+    this.pageOfInvoices = this.vendorDets.slice((pageNo-1)*5,(pageNo-1)*5+5);
     this.currPage=pageNo;
   }
 

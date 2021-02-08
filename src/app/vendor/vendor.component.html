@@ -1,3 +1,4 @@
+<app-loading *ngIf="isLoading">{{ isLoading }}</app-loading>
 <div class="row">
     <div class="col-md-2" style="text-align: center;">
         <h5><b>Suppliers</b></h5>
@@ -38,43 +39,12 @@
     <div class="col-md-1"></div>
 </div>
 <hr>
-<!-- <div class="row" style="padding: 1%; text-align: center;" *ngFor="let vendor of vendors; let i = index">
-    <div class="col-md-1">
-        <input class="form-check-input" type="checkbox" value="" id="defaultCheck1" />
-    </div>
-    <div class="col-md-2">
-        {{vendor.vendorName}}
-        <p class="text-secondary" style="font-size: smaller; font-weight: normal;">
-            {{vendor.village}} {{vendor.city}} {{vendor.district}} {{vendor.state}}, {{vendor.pinCode}}
-        </p>
-    </div>
-    <div class="col-md-2">{{vendor.mobile}}</div>
-    <div class="col-md-2">{{vendor.email}}</div>
-    <div class="col-md-2">{{vendor.gstNo}}</div>
-    <div class="col-md-1">
-        <span class="badge badge-pill badge-info">
-            <i class='fas fa-angle-down' id="{{i}}_down"
-                (click)="expandvendor(i)"></i>
-            <i class='fas fa-angle-up' id="{{i}}_up"
-                (click)="restorevendor(i)" style="display: none;"></i>
-        </span>
-    </div>
-    <div class="col-md-1">
-        <span class="badge badge-pill badge-info">
-            <i class='fas fa-angle-down' id="{{i}}_down"
-                (click)="expandvendor(i)"></i>
-            <i class='fas fa-angle-up' id="{{i}}_up"
-                (click)="restorevendor(i)" style="display: none;"></i>
-        </span>
-    </div>
-    <hr>
-</div> -->
 
 <div *ngFor="let vendor of pageOfVendors; let i = index">
 
     <div id="{{i}}">
-        <div class="row" style="margin-top: 2%; text-align: center;">
-            <div class="col-md-1"><input class="form-check-input" type="checkbox" value="" id="defaultCheck1"></div>
+        <div class="row" style="margin-top: 2%; text-align: left;">
+            <div class="col-md-1" style="text-align: center;"><input class="form-check-input" type="checkbox" value="" id="defaultCheck1"></div>
             <div class="col-md-2"> 
                 <!--<input class="form-control form-control-sm custom-input-style" type="text"
                     [(ngModel)]="vendor.vendorName">-->
@@ -116,14 +86,14 @@
                 </h3>
             </div>
             <div class="col-md-1" style="margin-top: 10px;">
-                <span class="badge badge-pill badge-danger"  style="margin-right: 10px; font-size: 13px;"
-                      >
+                <span class="badge badge-pill badge-light" style="border: 1px solid  rgb(23, 162, 184); margin-right: 5px;">
+                    <i class='fas fa-edit' style="color:  rgb(23, 162, 184);"></i>
                 </span>
-                <span class="badge badge-pill badge-info">
+                <span class="badge badge-pill badge-light" style="border: 1px solid  rgb(23, 162, 184);">
                     <i class='fas fa-angle-down' id="{{i}}_down"
-                        (click)="expandVendor(i)"></i>
+                        (click)="expandVendor(i)" style="color:  rgb(23, 162, 184);"></i>
                     <i class='fas fa-angle-up' id="{{i}}_up"
-                        (click)="restoreVendor(i)" style="display: none;"></i>
+                        (click)="restoreVendor(i)" style="display: none; color:  rgb(23, 162, 184);"></i>
                 </span>
             </div>
         </div>

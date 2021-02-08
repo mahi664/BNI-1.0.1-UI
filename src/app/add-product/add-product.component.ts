@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { GstDetails } from '../add-gst/add-gst.component';
+import { AlertsService } from '../services/alerts.service';
 import { CategoryService } from '../services/category.service';
 import { ProductService } from '../services/product.service';
 
@@ -16,6 +17,7 @@ export class Product {
 })
 export class AddProductComponent implements OnInit {
 
+  isLoading = false;
   categoryNamesList: string[] = [];
   productObj = new Product("", "", "", "", "", 0, "",0,0,"","");
   public keypressed;
@@ -33,11 +35,14 @@ export class AddProductComponent implements OnInit {
   catSelectedIndex=-1;
   constructor(private categoryService: CategoryService,
     private router: Router,
-    private productService: ProductService) { }
+    private productService: ProductService,
+    private alertService : AlertsService) { }
 
   ngOnInit(): void {
+    this.isLoading=true;
     this.categoryService.getCategoryNames().subscribe(
       response => {
+        this.isLoading=false;
         this.categoryNamesList = response.sort();
         console.log(this.categoryNamesList.sort());
       }
@@ -52,11 +57,16 @@ export class AddProductComponent implements OnInit {
   }
 
   addProduct() {
-    console.log(this.productObj);
+    this.isLoading = true;
     this.productService.addNewProduct(this.productObj).subscribe(
       response => {
-        alert(response);
-        this.router.navigate(['Inventory']);
+        this.isLoading = false;
+        let res : string;
+        res = response;
+        let splitres = res.split(':');
+        this.alertService.showAlert(splitres[1],splitres[0]);
+        setTimeout( () => this.alertService.hideAlert(splitres[0]), 5000 );
+        this.productObj = new Product("", "", "", "", "", 0, "",0,0,"","");
       });
   }
 
@@ -96,7 +106,10 @@ export class AddProductComponent implements OnInit {
         // this.selectItem(this.selectedIndex);
         // this.listHidden = true;
         if (index == 0) {
+          // product.gstType = product.gstType;
+          let temp: GstDetails[] = this.gstRatesList.filter((item) => item.gstName.toLowerCase() === product.gstType.toLowerCase())
           product.gstType = product.gstType;
+          product.gst = temp[0].gstRate;
         }
         else if (index == 1) {
           product.categoryName = product.categoryName;

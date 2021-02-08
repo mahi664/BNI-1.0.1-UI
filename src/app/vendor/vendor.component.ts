@@ -22,6 +22,7 @@ export class VendorComponent implements OnInit {
 
   vendors = [
   ];
+  isLoading = false;
   noOfPages = 0;
   i;
   pageOfVendors = [];
@@ -30,8 +31,10 @@ export class VendorComponent implements OnInit {
   constructor(private vendorService : VendorService) { }
 
   ngOnInit(): void {
+    this.isLoading = true;
     this.vendorService.getVendorDetails().subscribe(
       response=>{
+        this.isLoading = false;
         console.log(response);
         this.vendors = response;
         this.noOfPages = Math.ceil(this.vendors.length / 5);

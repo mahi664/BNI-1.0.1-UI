@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AlertsService } from '../services/alerts.service';
 import { VendorService } from '../services/vendor.service';
 
 export class VendorDet {
@@ -14,16 +15,25 @@ export class VendorDet {
 })
 export class AddVendorComponent implements OnInit {
 
+  isLoading = false;
   vendorDetObj = new VendorDet("","","","","","","","","","","");
-  constructor(private vendorService : VendorService) { }
+  constructor(private vendorService : VendorService,
+              private alertService : AlertsService) { }
 
   ngOnInit(): void {
   }
 
   addVendor(){
+    this.isLoading = true;
     this.vendorService.addVendor(this.vendorDetObj).subscribe(
       response=>{
-        alert(response);
+        this.isLoading = false;
+        let res : string;
+        res = response;
+        let splitres = res.split(':');
+        this.alertService.showAlert(splitres[1],splitres[0]);
+        setTimeout( () => this.alertService.hideAlert(splitres[0]), 5000 );
+        // alert(response);
       }
     );
   }
