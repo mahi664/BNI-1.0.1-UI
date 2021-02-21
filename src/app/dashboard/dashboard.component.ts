@@ -1,8 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonServiceService } from '../services/common-service.service';
+import { DashboardStatisticsService } from '../services/dashboard-statistics.service';
 
 export class weekDet{
   constructor(public weekStartDate: string,public weekEndDate: string, public month : string, public secMonth: string, public weekSale: number){}
+}
+export class DashboardStatistics{
+  constructor(public totalSaledAmt: number,public totalClients: number,public pendingSaledAmt: number,
+              public pendingPurchaseAmt: number,public totalGstAmt: number,public totalPurchaseAmt: number,
+              public totalVendors: number,public expiredProducts: number){}
 }
 
 @Component({
@@ -82,12 +88,20 @@ export class DashboardComponent implements OnInit {
    };
    widthYrly = 330;
    heightYrly = 400;
+   dashboardStatistics : DashboardStatistics;
 
-  constructor(private commonService: CommonServiceService) { }
+  constructor(private dashboardStatisticsService : DashboardStatisticsService) { }
   isLoading = false;
   ngOnInit() {
     this.isLoading = true;
-    setTimeout( () => this.isLoading = false, 2000 )
+    this.dashboardStatisticsService.getDashboardStatistics().subscribe(
+      response =>{
+        this.isLoading = false;
+        this.dashboardStatistics = response;
+        console.log(this.dashboardStatistics);
+      }
+    )
+    // setTimeout( () => this.isLoading = false, 2000 )
   }
 
 }

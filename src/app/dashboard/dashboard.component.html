@@ -9,7 +9,7 @@
         <div class="card stat-cards">
             <div class="card-body">
                 <div class="row" style="text-align:center;">
-                    <div class="col-md-1" style="maragin-top:8px;">
+                    <div class="col-md-1" style="margin-top:8px;">
                         <span class="badge badge-pill badge-info"><i class='fas fa-angle-left'></i></span>
                     </div>
                     <div *ngFor="let week of weeks" class="col-md-1 card week">
@@ -50,7 +50,7 @@
         <div class="card stat-cards">
             <div class="card-body">
                 <h6><b>Total Sales</b></h6>
-                <span style="font-size: 25px;"><i class='fas fa-rupee-sign'></i><b> 2,00,000</b></span>
+                <span style="font-size: 25px;"><i class='fas fa-rupee-sign'></i><b> {{dashboardStatistics.totalSaledAmt}}</b></span>
                 <span style="margin-left: 40px;" class="text-success"><b>10% <i class="fas fa-arrow-up"></i></b></span>
             </div>
         </div>
@@ -58,7 +58,7 @@
         <div class="card stat-cards">
             <div class="card-body">
                 <h6><b>Total Purchase</b></h6>
-                <span style="font-size: 25px;"><i class='fas fa-rupee-sign'></i><b> 2,00,000</b></span>
+                <span style="font-size: 25px;"><i class='fas fa-rupee-sign'></i><b> {{dashboardStatistics.totalPurchaseAmt}}</b></span>
                 <span style="margin-left: 40px;" class="text-success"><b>10% <i class="fas fa-arrow-up"></i></b></span>
             </div>
         </div>
@@ -68,7 +68,7 @@
         <div class="card stat-cards">
             <div class="card-body">
                 <h6><b>Total Clients</b></h6>
-                <span style="font-size: 25px;"><i class='fas fa-user-tie'></i><b> 200</b></span>
+                <span style="font-size: 25px;"><i class='fas fa-user-tie'></i><b> {{dashboardStatistics.totalClients}}</b></span>
                 <!-- <span style="margin-left: 50px;" class="text-success"><b>10% <i class="fas fa-arrow-up"></i></b></span> -->
             </div>
         </div>
@@ -76,7 +76,7 @@
         <div class="card stat-cards">
             <div class="card-body">
                 <h6><b>Total Vendors</b></h6>
-                <span style="font-size: 25px;"><i class='fas fa-user-tie'></i><b> 150</b></span>
+                <span style="font-size: 25px;"><i class='fas fa-user-tie'></i><b> {{dashboardStatistics.totalVendors}}</b></span>
                 <!-- <span style="margin-left: 50px;" class="text-success"><b>10% <i class="fas fa-arrow-up"></i></b></span> -->
             </div>
         </div>
@@ -86,7 +86,7 @@
         <div class="card stat-cards">
             <div class="card-body">
                 <h6><b>Pending Sales Payment</b></h6>
-                <span style="font-size: 25px;"><i class='fas fa-rupee-sign'></i><b> 10,000</b></span>
+                <span style="font-size: 25px;"><i class='fas fa-rupee-sign'></i><b> {{dashboardStatistics.pendingSaledAmt}}</b></span>
                 <span style="margin-left: 40px;" class="text-success"><b>10% <i class="fas fa-arrow-up"></i></b></span>
             </div>
         </div>
@@ -94,7 +94,7 @@
         <div class="card stat-cards">
             <div class="card-body">
                 <h6><b>Pending Purchase Payment</b></h6>
-                <span style="font-size: 25px;"><i class='fas fa-rupee-sign'></i><b> 1,10,000</b></span>
+                <span style="font-size: 25px;"><i class='fas fa-rupee-sign'></i><b> {{dashboardStatistics.pendingPurchaseAmt}}</b></span>
                 <span style="margin-left: 40px;" class="text-success"><b>10% <i class="fas fa-arrow-up"></i></b></span>
             </div>
         </div>
@@ -104,7 +104,7 @@
         <div class="card stat-cards">
             <div class="card-body">
                 <h6><b>Total GST</b></h6>
-                <span style="font-size: 25px;"><i class='fas fa-rupee-sign'></i><b> 36,000</b></span>
+                <span style="font-size: 25px;"><i class='fas fa-rupee-sign'></i><b> {{dashboardStatistics.totalGstAmt}}</b></span>
                 <span style="margin-left: 50px;" class="text-success"><b>10% <i class="fas fa-arrow-up"></i></b></span>
             </div>
         </div>
@@ -112,7 +112,7 @@
         <div class="card">
             <div class="card-body stat-cards">
                 <h6><b>Expired Products</b></h6>
-                <span style="font-size: 25px;"><i class='fas fa-dolly-flatbed'></i><b> 150</b></span>
+                <span style="font-size: 25px;"><i class='fas fa-dolly-flatbed'></i><b> {{dashboardStatistics.expiredProducts}}</b></span>
                 <span style="margin-left: 50px;" class="text-success"><b>10% <i class="fas fa-arrow-up"></i></b></span>
             </div>
         </div>

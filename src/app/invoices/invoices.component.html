@@ -1,21 +1,22 @@
+<app-alerts></app-alerts>
+<app-loading *ngIf="isLoading">{{ isLoading }}</app-loading>
 <div class="row">
 	<div class="col-md-2" style="text-align: center;">
-		<h5><b>Invoices</b></h5>
+		<h5><b>Sales Invoices</b></h5>
 	</div>
 	<div class="col-md-2" style="text-align: center;  ">
 		<select class="form-control form-control-sm custom-input-style">
-      <option>Select Payment Status</option>
-      <option *ngFor="let payStatus of paymentsStatuses">{{payStatus}}</option>
+      <option>Payment Status</option>
     </select>
 	</div>
 	<div class="col-md-2" style="text-align: center; ">
 		<input class="form-control form-control-sm custom-input-style" type="date">
-  </div>
+            </div>
 		<div class="col-md-3" style="text-align: center;  ">
-			<input class="form-control form-control-sm custom-input-style" type="text" [(ngModel)]="quickSearch" placeholder="Quick search">
-    </div>
+			<input class="form-control form-control-sm custom-input-style" type="text" placeholder="Invoice Id">
+            </div>
 			<div class="col-md-2" style="text-align: right;">
-				<h5><span class="badge badge-pill bg-info"><a routerLink="/New-Sales-Invoice" style="text-decoration: none; color: white;">+ New Invoice</a></span>
+				<h5><span class="badge badge-pill bg-info"><a routerLink="/New-Sales-Invoice" style="text-decoration: none; color: white;">+ New Order</a></span>
 				</h5>
 			</div>
 			<div class="col-md-1" style="text-align: right;">
@@ -27,30 +28,30 @@
 			<div class="col-md-1">#</div>
 			<div class="col-md-2">Invoice Id</div>
 			<div class="col-md-2">Date</div>
-			<div class="col-md-2">Customer</div>
+			<div class="col-md-2">Vendor</div>
 			<div class="col-md-1">GST</div>
 			<div class="col-md-1">Total</div>
-			<div class="col-md-1">Paid</div>
-      <div class="col-md-1">Unpaid</div>
+			<div class="col-md-1">Due Amt</div>
+			<div class="col-md-1">Pyment</div>
 		</div>
 		<hr>
 
-    <div *ngFor="let invoice of pageOfInvoices ; let i = index">
+    <div *ngFor="let vendor of pageOfInvoices; let i = index">
 		<div id="{{i}}">
 			<div class="row" style="margin-top: 2%; text-align: center;">
 				<div class="col-md-1"><input class="form-check-input" type="checkbox" value="" id="defaultCheck1"></div>
-					<div class="col-md-2">{{invoice.invoiceId}}</div>
-					<div class="col-md-2">{{invoice.invoiceDate | date}}</div>
-					<div class="col-md-2">{{invoice.customerName}}</div>
-          <div class="col-md-1"><p><i class='fas fa-rupee-sign'></i>{{invoice.gst}}</p></div>
+					<div class="col-md-2">{{vendor.invoices[0].invoiceId}}</div>
+					<div class="col-md-2">{{vendor.invoices[0].invoiceDate | date}}</div>
+					<div class="col-md-2">{{vendor.customerName}}</div>
+          			<div class="col-md-1"><p><i class='fas fa-rupee-sign'></i>{{vendor.invoices[0].gstAmt}}</p></div>
 					<div class="col-md-1">
-						<p><i class='fas fa-rupee-sign'></i>{{invoice.total}}</p>
+						<p><i class='fas fa-rupee-sign'></i>{{vendor.invoices[0].totalAmt}}</p>
 					</div>
 					<div class="col-md-1 ">
-						<input class="form-control form-control-sm custom-input-style" type="text" [(ngModel)]="invoice.paid">
+						<p><i class='fas fa-rupee-sign'></i>{{vendor.invoices[0].dueAmt}}</p>
 					</div>
-          <div class="col-md-1 ">
-						<input class="form-control form-control-sm custom-input-style" type="text" [(ngModel)]="invoice.total - invoice.paid">
+					<div class="col-md-1 ">
+						<p>{{vendor.invoices[0].paymentType}}</p>
 					</div>
 					<div class="col-md-1">
 						<span class="badge badge-pill badge-info"><i class='fas fa-angle-down' id="{{i}}_down" (click)="expandProduct(i)"></i><i class='fas fa-angle-up' id="{{i}}_up" (click)="restoreProduct(i)" style="display: none;"></i></span>
@@ -62,26 +63,30 @@
 							<th>#</th>
 							<th>Batch No.</th>
               <th>Product</th>
-              <th>Exp Date</th>
-							<th>Price</th>
+              <th>Cost</th>
+							<!-- <th>Price</th> -->
 							<th>Qty</th>
-              <th>CGST</th>
-              <th>SGST</th>
+              <th>GST</th>
 							<th>Disc</th>
 							<th>Total</th>
+              <!-- <th>Mfg Date</th> -->
+              <th>Exp Date</th>
+              <th>Ret.Qty</th>
 						</thead>
 						<tbody>
-							<tr *ngFor="let product of invoice.productsDet">
+							<tr *ngFor="let product of vendor.invoices[0].productsList">
 								<td><input class="form-check-input" type="checkbox" value="" id="defaultCheck1"></td>
 								<td>{{product.batchNo}}</td>
                 <td>{{product.productName}}</td>
-                <td>{{product.expDate | date}}</td>
-								<td><i class='fas fa-rupee-sign'></i>{{product.price}}</td>
+								<td><i class='fas fa-rupee-sign'></i>{{product.cost}}</td>
+                <!-- <td><i class='fas fa-rupee-sign'></i>{{product.price}}</td> -->
 								<td>x {{product.quantity}}</td>
-                <td>{{product.gst}}</td>
-                <td>{{product.gst}}</td>
+                <td>{{product.gst}}%</td>
 								<td style="color: red;">{{product.discount}}%</td>
 								<td><i class='fas fa-rupee-sign'></i>{{product.total}}</td>
+                <!-- <td>{{product.mfgDate | date}}</td> -->
+                <td>{{product.expDate | date}}</td>
+                <td style="width:5%;"><input class="form-control form-control-sm custom-input-style" type="text"></td>
 							</tr>
 						</tbody>
 					</table>
@@ -89,7 +94,7 @@
 			</div>
 			<hr>
     </div>
-    <div class="col-md-12 text-info" style="bottom: 0; width: 100%;">
+  <div class="col-md-12 text-info" style="bottom: 0; width: 100%;">
       <nav aria-label="Page navigation example">
         <ul class="pagination pagination-sm">
           <li class="page-item" (click)="changePageContent(currPage-1)">
@@ -113,6 +118,6 @@
     <div class="col-md-12" style="bottom: 0; width: 100%;">
       <h5>
         <span class="badge badge-pill bg-info"><a href="#" style="text-decoration: none; color: white;">Save </a></span>&nbsp;
-        <span class="badge badge-pill bg-info"><a (click)="confirmDelete()" style="text-decoration: none; color: white;">Delete</a></span>
+        <span class="badge badge-pill bg-info"><a href="#" style="text-decoration: none; color: white;">Delete</a></span>
       </h5>
     </div>

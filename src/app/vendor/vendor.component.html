@@ -1,3 +1,4 @@
+<app-alerts></app-alerts>
 <app-loading *ngIf="isLoading">{{ isLoading }}</app-loading>
 <div class="row">
     <div class="col-md-2" style="text-align: center;">
@@ -76,14 +77,11 @@
                     <span class="badge badge-success" style="padding: 10px 20px;"><b>100</b></span>
                 </h2>
             </div> -->
-            <div class="col-md-2">
-                <!-- <input class="form-control form-control-sm custom-input-style" type="text"
-                    [(ngModel)]="vendor.mrp"> -->
-                <h3>
-                    <span class="badge badge-light text-danger" style="padding: 10px 20px; border: 1px solid  rgb(23, 162, 184); width: 100px;;">
-                        <i class='fas fa-rupee-sign'>1000000</i>
-                    </span>
-                </h3>
+            <div class="col-md-2" style="margin-top: 10px;">
+                <span class="badge badge-pill" [ngClass]="{'badge-success':!isDueAmtInDanger(vendor.totalDueAmt),'badge-danger':isDueAmtInDanger(vendor.totalDueAmt)}" style="margin-right: 10px; font-size: 13px;">
+                    {{vendor.totalDueAmt}}
+                </span>
+                    
             </div>
             <div class="col-md-1" style="margin-top: 10px;">
                 <span class="badge badge-pill badge-light" style="border: 1px solid  rgb(23, 162, 184); margin-right: 5px;">
@@ -113,12 +111,12 @@
                     <th>Mfg Date</th> -->
                 </thead>
                 <tbody>
-                    <tr *ngFor="let purchaseOrder of vendor.purchaseOrdersList; let i=index">
+                    <tr *ngFor="let purchaseOrder of vendor.invoices; let i=index">
                         <td>{{i+1}}</td>
                         <td>{{purchaseOrder.invoiceId}}</td>
                         <!-- <td><i class='fas fa-rupee-sign'></i>{{inventory.sellingPrice}}</td>
                         <td><i class='fas fa-rupee-sign'></i>{{inventory.purchasedCost}}</td> -->
-                        <td>{{purchaseOrder.invoiceDate}}</td>
+                        <td>{{purchaseOrder.invoiceDate | date}}</td>
                         <td>{{purchaseOrder.totalAmt}}</td>
                         <td>{{purchaseOrder.paidAmt}}</td>
                         <td>{{purchaseOrder.dueAmt}}</td>

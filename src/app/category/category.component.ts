@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { AlertsService } from '../services/alerts.service';
 import { CategoryService } from '../services/category.service';
 
 export class CategoryDetails {
@@ -27,7 +28,7 @@ export class CategoryComponent implements OnInit {
 
   message = "";
   constructor(private categoryService: CategoryService,
-    private router: Router) { }
+    private router: Router, private alertService:AlertsService) { }
 
   categories: CategoryDetails[];
   noOfPages;
@@ -42,8 +43,10 @@ export class CategoryComponent implements OnInit {
   batchDropDowns = false;
   selectedIndex = -1;
   categoryFilterText = "";
+  isLoading = false;
 
   ngOnInit() {
+    this.isLoading = true;
     this.noOfPages = 0;
     this.pageOfCategories = [];
     this.pages = [];
@@ -52,11 +55,18 @@ export class CategoryComponent implements OnInit {
     if (this.categories === undefined) {
       this.categoryService.getAllCategoryDetails().subscribe(
         respose => {
+          this.isLoading = false;
           console.log(respose);
           this.categories = respose;
           this.populateCategoryCheckboxStatuses();
           // console.log(this.categoryCheckboxStatus);
           this.populatePagination();
+        },
+        error=>{
+          this.isLoading=false;
+          this.alertService.showAlert("Something Went Wrong","ERROR");
+          setTimeout( () => this.alertService.hideAlert("ERROR"), 5000 );
+          console.log(error);
         }
       );
     }

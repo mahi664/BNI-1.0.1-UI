@@ -1,5 +1,6 @@
 import { DatePipe } from '@angular/common';
 import { Component, OnInit, HostListener } from '@angular/core';
+import { AlertsService } from '../services/alerts.service';
 import { ProductService } from '../services/product.service';
 import { PurchaseInvoiceService } from '../services/purchase-invoice.service';
 import { VendorService } from '../services/vendor.service';
@@ -58,16 +59,12 @@ export class PurchaseInvoiceGenerationComponent implements OnInit {
   constructor(private productService: ProductService,
     private vendorService: VendorService,
     private purchaseInvoiceService : PurchaseInvoiceService,
-    private datePipe: DatePipe) { }
+    private datePipe: DatePipe,
+    private alertService: AlertsService) { }
 
   ngOnInit() {
-    this.vendorDet = new VendorDets(-1,"","","","","","",0,[]);
-    this.vendorDet.invoices.push(new purchaseOrderReceipt("",new Date(),0,0,0,0,"","","","",[]));
-    this.vendorDet.invoices[0].productsList.push(new product(0,"","",0,0,0,0,0,0,new Date(),"","","",0));
-    // this.batchDropDowns.push(false);
-    // this.filteredBatchNos=[];
-    this.vendorDet.invoices[0].invoiceDate = this.datePipe.transform(this.vendorDet.invoices[0].invoiceDate,'yyyy-MM-dd');
-
+    this.isLoading = true;
+    this.populateNewPurchaseInvoice();
     this.productService.getProductNames().subscribe(
       response => {
         this.productList = response;
@@ -88,12 +85,15 @@ export class PurchaseInvoiceGenerationComponent implements OnInit {
     ); 
     this.vendorService.getVendorList().subscribe(
       response=>{
+        this.isLoading = false;
         this.vendorList = response;
         // console.log(this.vendorList);
       },
       error=>{
+        this.isLoading=false;
+        this.alertService.showAlert("Something Went Wrong","ERROR");
+        setTimeout( () => this.alertService.hideAlert("ERROR"), 5000 );
         console.log(error);
-        alert("Error in Saving purchase order");
       }
     );
   }
@@ -125,7 +125,11 @@ export class PurchaseInvoiceGenerationComponent implements OnInit {
     this.purchaseInvoiceService.savePurchaseInvoice(this.vendorDet).subscribe(
       response =>{
         this.isLoading=false;
-        alert(response);
+        let res : string;
+        res = response;
+        let splitres = res.split(':');
+        this.alertService.showAlert(splitres[1],splitres[0]);
+        setTimeout( () => this.alertService.hideAlert(splitres[0]), 5000 );
       }
     );
   }
@@ -280,5 +284,13 @@ export class PurchaseInvoiceGenerationComponent implements OnInit {
     this.vendorDet.invoices[0].gstAmt+=gstAmt*multiplier;
     this.vendorDet.invoices[0].totalAmt+=product.total*multiplier;
     this.vendorDet.invoices[0].paidAmt+=product.total*multiplier;
+  }
+
+  populateNewPurchaseInvoice(){
+    this.vendorDet = new VendorDets(-1,"","","","","","",0,[]);
+    this.vendorDet.invoices.push(new purchaseOrderReceipt("",new Date(),0,0,0,0,"","","","",[]));
+    this.vendorDet.invoices[0].productsList.push(new product(0,"","",0,0,0,0,0,0,new Date(),"","","",0));
+    this.vendorDet.invoices[0].invoiceDate = this.datePipe.transform(this.vendorDet.invoices[0].invoiceDate,'yyyy-MM-dd');
+    
   }
 }

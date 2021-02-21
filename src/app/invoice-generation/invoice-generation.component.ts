@@ -1,6 +1,7 @@
 import { DatePipe } from '@angular/common';
 import { Component, OnInit, HostListener } from '@angular/core';
 import { product } from '../purchase-invoice-generation/purchase-invoice-generation.component';
+import { AlertsService } from '../services/alerts.service';
 import { CustomerService } from '../services/customer.service';
 import { ProductService } from '../services/product.service';
 import { SalesInvoiceService } from '../services/sales-invoice.service';
@@ -48,10 +49,12 @@ export class InvoiceGenerationComponent implements OnInit {
   filteredCustomerList : CustomerDets[]=[];
   customerListDropDown;
 
+  isLoading = false;
+
   constructor(private productService: ProductService,
     private customerService: CustomerService,
     private salesInvoiceService: SalesInvoiceService,
-    private datePipe: DatePipe) { }
+    private datePipe: DatePipe, private alertService: AlertsService) { }
 
   ngOnInit(): void {
     this.customerDet = new CustomerDets(-1,"","","","","","",0,[]);
@@ -59,6 +62,12 @@ export class InvoiceGenerationComponent implements OnInit {
     this.customerDet.invoices[0].productsList.push(new product(0,"","",0,0,0,0,0,0,new Date(),"","","",0));
     this.customerDet.invoices[0].invoiceDate = this.datePipe.transform(this.customerDet.invoices[0].invoiceDate,'yyyy-MM-dd');
     this.salesInvoiceService.setCustomerDet(this.customerDet);
+    this.isLoading = true;
+    this.salesInvoiceService.getNextInvoiceId().subscribe(
+      response=>{
+        this.customerDet.invoices[0].invoiceId = "RC-"+response;
+      },
+    );
     this.productService.getProductNames().subscribe(
       response => {
         this.productList = response;
@@ -85,11 +94,14 @@ export class InvoiceGenerationComponent implements OnInit {
     this.productService.getBatchNo2ProdDetMap()
     this.customerService.getCustomerList().subscribe(
       response=>{
+        this.isLoading = false;
         this.customerList = response;
       },
       error=>{
+        this.isLoading=false;
+        this.alertService.showAlert("Something Went Wrong","ERROR");
+        setTimeout( () => this.alertService.hideAlert("ERROR"), 5000 );
         console.log(error);
-        alert("Error in Saving purchase order");
       }
     );
   }
@@ -116,10 +128,24 @@ export class InvoiceGenerationComponent implements OnInit {
   }
 
   save() {
+    this.isLoading = true;
     console.log(this.customerDet);
+    let invoiceId = this.customerDet.invoices[0].invoiceId;
+    this.customerDet.invoices[0].invoiceId = invoiceId.split("-")[1];
     this.salesInvoiceService.saveSalesInvoice(this.customerDet).subscribe(
       response =>{
-        alert(response);
+        this.isLoading = false;
+        let res : string;
+        res = response;
+        let splitres = res.split(':');
+        this.alertService.showAlert(splitres[1],splitres[0]);
+        setTimeout( () => this.alertService.hideAlert(splitres[0]), 5000 );
+      },
+      error => {
+        this.isLoading=false;
+        this.alertService.showAlert("Something Went Wrong","ERROR");
+        setTimeout( () => this.alertService.hideAlert("ERROR"), 5000 );
+        console.log(error);
       }
     );
   }

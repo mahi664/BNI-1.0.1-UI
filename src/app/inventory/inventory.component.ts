@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+import { AlertsService } from '../services/alerts.service';
 import { ProductService } from '../services/product.service';
 
 export class InvetoryDetails {
   constructor(public batchNo: string, public totalQty: number, public inStock: number, 
     public sellingPrice: number, public purchasedCost: number, public gst: number, public expDate: Date, 
-    public mfgDate: Date) { }
+    public mfgDate: Date, public expStatus: string) { }
 }
 
 export class ProductDet {
@@ -22,7 +23,7 @@ export class InventoryComponent implements OnInit {
 
   products : ProductDet[] = [];
   categories = ['Test Category 1', 'Test Category 2', 'Test Category 3', 'Test Category 4', 'Test Category 5'];
-  constructor(private productService: ProductService) { }
+  constructor(private productService: ProductService, private alertService: AlertsService) { }
 
   noOfPages = 0;
   i;
@@ -30,6 +31,9 @@ export class InventoryComponent implements OnInit {
   pages = [];
   currPage = 1;
   isLoading = false;
+  displayFilter = false;
+  EXPIRED     =   "Expired";
+  ABOUT_TO_EXPIRE     =   "About To Expire";
   ngOnInit() {
     this.isLoading = true;
     this.productService.getProductDetails().subscribe(
@@ -45,6 +49,9 @@ export class InventoryComponent implements OnInit {
       },
       error => {
         this.isLoading=false;
+        this.alertService.showAlert("Something Went Wrong","ERROR");
+        setTimeout( () => this.alertService.hideAlert("ERROR"), 5000 );
+        console.log(error);
       }
     )
 
@@ -83,10 +90,12 @@ export class InventoryComponent implements OnInit {
     this.currPage = pageNo;
   }
 
-  isStockInDanger(productDet: ProductDet){
-    if(productDet.inStock>60)
-      return false;
+  stockStatus(productDet: ProductDet){
+    if(productDet.inStock>=60)
+      return 0;
+    else if(productDet.inStock<60 && productDet.inStock>0)
+      return 1;
     else
-      return true;
+      return 2;
   }
 }

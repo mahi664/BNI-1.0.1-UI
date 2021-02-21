@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { customerDet } from '../add-customer/add-customer.component';
+import { CustomerDetails } from '../customers/customers.component';
 import { CustomerDets } from '../invoice-generation/invoice-generation.component';
 import { CommonServiceService } from './common-service.service';
 
@@ -19,5 +20,9 @@ export class CustomerService {
 
   getCustomerList(){
     return this.http.get<CustomerDets[]>(this.BASE_URL+"/get-customer-list");
+  }
+
+  getCustomerDetails(){
+    return this.http.get<CustomerDetails[]>(this.BASE_URL+"/get-customer-details");
   }
 }

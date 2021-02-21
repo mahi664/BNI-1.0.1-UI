@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { VendorDets } from '../purchase-invoice-generation/purchase-invoice-generation.component';
+import { AlertsService } from '../services/alerts.service';
 import { PurchaseInvoiceService } from '../services/purchase-invoice.service';
 
 export class InvoiceDet{
@@ -20,16 +21,19 @@ export class PurchaseOrderComponent implements OnInit {
   
   vendorDets : VendorDets[] = []; 
   paymentsStatuses = ['Paid','Unpaid','Partially Paid'];
-  constructor(private purchaseInvoiceService: PurchaseInvoiceService) { }
+  constructor(private purchaseInvoiceService: PurchaseInvoiceService, private alertService: AlertsService) { }
 
   noOfPages=0;
   i;
   pageOfInvoices=[];
   pages=[];
   currPage=1;
+  isLoading = false;
   ngOnInit() {
+    this.isLoading = true;
     this.purchaseInvoiceService.getPurchaseInvoices().subscribe(
       response =>{
+        this.isLoading=false;
         console.log(response);
         this.vendorDets = response;
         this.noOfPages = Math.ceil(this.vendorDets.length/5);
@@ -37,6 +41,12 @@ export class PurchaseOrderComponent implements OnInit {
           this.pages.push(this.i);
         }
         this.pageOfInvoices = this.vendorDets.slice(0,5);
+      },
+      error=>{
+        this.isLoading=false;
+        this.alertService.showAlert("Something Went Wrong","ERROR");
+        setTimeout( () => this.alertService.hideAlert("ERROR"), 5000 );
+        console.log(error);
       }
     );
   }

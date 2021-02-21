@@ -1,17 +1,16 @@
 *{
-    font-size: 12px;
+    font-size: small;
   }
   .custom-input-style{
          border: 1px solid rgb(23, 162, 184);
-         font-size: 12px;
+         font-size: smaller;
       }
       .list-custom-headings{
         margin-top: 3%; 
         font-weight: bold; 
-        text-align: center;
+        text-align: left;
         padding: 1%;
         border-radius: 5px;
-        font-size: 12px;
       }
       .active-custom-style{
        color: rgba(25,164,186,1);

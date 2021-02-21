@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+import { AlertsService } from '../services/alerts.service';
 import { VendorService } from '../services/vendor.service';
 
 export class VendorDetails{
   constructor(public vendorId: number, public vendorName: string, public village: string, public city: string,
     public district: string, public state: string, public pinCode: string, public uidNo: string, 
-    public phone: string, public email: string, public gstNo: string, public panNo: string, 
+    public phone: string, public email: string, public gstNo: string, public panNo: string, public totalDueAmt:number, 
     public purchaseOrdersList: PurchaseOrderDetails[]){}
 }
 
@@ -28,7 +29,7 @@ export class VendorComponent implements OnInit {
   pageOfVendors = [];
   pages = [];
   currPage = 1;
-  constructor(private vendorService : VendorService) { }
+  constructor(private vendorService : VendorService,private alertService:AlertsService) { }
 
   ngOnInit(): void {
     this.isLoading = true;
@@ -42,6 +43,12 @@ export class VendorComponent implements OnInit {
           this.pages.push(this.i);
         }
         this.pageOfVendors = this.vendors.slice(0, 5);
+      },
+      error=>{
+        this.isLoading=false;
+        this.alertService.showAlert("Something Went Wrong","ERROR");
+        setTimeout( () => this.alertService.hideAlert("ERROR"), 5000 );
+        console.log(error);
       }
     );
   }
@@ -77,5 +84,12 @@ export class VendorComponent implements OnInit {
     document.getElementById(product_up_button_id).style.display = "none";
     document.getElementById(product_down_button_id).style.display = "block";
     document.getElementById(content_id).style.display = "none";
+  }
+
+  isDueAmtInDanger(dueAmt: number){
+    if(dueAmt<=0)
+      return false;
+    else 
+      return true;
   }
 }

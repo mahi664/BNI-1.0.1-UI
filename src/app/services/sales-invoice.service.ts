@@ -26,4 +26,12 @@ export class SalesInvoiceService {
     console.log(this.customerDet);
     this.customerDet = customerDet;
   }
+
+  getSalesInvoices(){
+    return this.http.get<CustomerDets[]>(this.BASE_URL+"/get-all-sales-invoices");
+  }
+
+  getNextInvoiceId(){
+    return this.http.get<number>(this.BASE_URL+"/get-next-invoice-id");
+  }
 }

@@ -34,6 +34,12 @@ export class AddVendorComponent implements OnInit {
         this.alertService.showAlert(splitres[1],splitres[0]);
         setTimeout( () => this.alertService.hideAlert(splitres[0]), 5000 );
         // alert(response);
+      },
+      error=>{
+        this.isLoading=false;
+        this.alertService.showAlert("Something Went Wrong","ERROR");
+        setTimeout( () => this.alertService.hideAlert("ERROR"), 5000 );
+        console.log(error);
       }
     );
   }

@@ -1,84 +1,126 @@
+<app-alerts></app-alerts>
+<app-loading *ngIf="isLoading">{{ isLoading }}</app-loading>
 <div class="row">
     <div class="col-md-2" style="text-align: center;">
         <h5><b>Customers</b></h5>
     </div>
     <div class="col-md-2" style="text-align: center;  ">
-        <select class="form-control form-control-sm custom-input-style">
+        <!-- <select class="form-control form-control-sm custom-input-style">
             <option>Category</option>
-        </select>
+        </select> -->
     </div>
     <div class="col-md-2" style="text-align: center;">
-        <select class="form-control form-control-sm custom-input-style">
-            <option>Product</option>
-        </select>
+        <!-- <select class="form-control form-control-sm custom-input-style">
+            <option>vendor</option>
+        </select> -->
     </div>
     <div class="col-md-3" style="text-align: center;  ">
         <input class="form-control form-control-sm custom-input-style" type="text" placeholder="Quick Search">
     </div>
     <div class="col-md-2" style="text-align: right;">
-        <h5><span class="badge badge-pill bg-info"><a href="#" style="text-decoration: none; color: white;">+ Add
-                    product</a></span>
+        <h5>
+            <span class="badge badge-pill bg-info"><a routerLink="/Add-vendor"
+                    style="text-decoration: none; color: white;">+ Add
+                    New Customer</a></span>
         </h5>
     </div>
     <div class="col-md-1" style="text-align: right;">
         <span class="badge badge-pill badge-info"><i class='fas fa-info'></i></span>
-        <span class="badge badge-pill badge-info"><i class='fas fa-filter'></i></span>
+        <!-- <span class="badge badge-pill badge-info"><i class='fas fa-filter'></i></span> -->
     </div>
 </div>
-
 <div class="row list-custom-headings bg-info">
     <div class="col-md-1">#</div>
     <div class="col-md-2">Customer Name</div>
-    <div class="col-md-2">Address</div>
     <div class="col-md-2">Mobile</div>
     <div class="col-md-2">Email</div>
-    <div class="col-md-2">Total Unpaid</div>
+    <div class="col-md-2">GST No</div>
+    <!-- <div class="col-md-1">Orders</div> -->
+    <div class="col-md-2">Due Amt.</div>
+    <div class="col-md-1"></div>
 </div>
 <hr>
 
-<div *ngFor="let product of pageOfCustomers; let i = index">
+<div *ngFor="let vendor of pageOfCustomers; let i = index">
 
     <div id="{{i}}">
-        <div class="row" style="margin-top: 2%; text-align: center;">
-            <div class="col-md-1"><input class="form-check-input" type="checkbox" value="" id="defaultCheck1"></div>
-            <div class="col-md-2"> <input class="form-control form-control-sm custom-input-style" type="text"
-                    [(ngModel)]="product.customerName"></div>
-            <div class="col-md-2"><input class="form-control form-control-sm custom-input-style" type="text"
-                    [(ngModel)]="product.address"></div>
-            <div class="col-md-2"><input class="form-control form-control-sm custom-input-style" type="text"
-                    [(ngModel)]="product.mobile"></div>
-            <div class="col-md-2"><input class="form-control form-control-sm custom-input-style" type="text"
-                    [(ngModel)]="product.email"></div>
-            <div class="col-md-2"><input class="form-control form-control-sm custom-input-style" type="text"
-                    [(ngModel)]="product.pendingPayment"></div>
-            <div class="col-md-1">
-                <span class="badge badge-pill badge-info"><i class='fas fa-angle-down' id="{{i}}_down"
-                        (click)="expandProduct(i)"></i><i class='fas fa-angle-up' id="{{i}}_up"
-                        (click)="restoreProduct(i)" style="display: none;"></i></span>
+        <div class="row" style="margin-top: 2%; text-align: left;">
+            <div class="col-md-1" style="text-align: center;"><input class="form-check-input" type="checkbox" value="" id="defaultCheck1"></div>
+            <div class="col-md-2"> 
+                <!--<input class="form-control form-control-sm custom-input-style" type="text"
+                    [(ngModel)]="vendor.vendorName">-->
+                {{vendor.customerName}}
+                <p class="text-secondary" style="font-size: smaller; font-weight: normal;">
+                    {{vendor.village}} {{vendor.city}} {{vendor.district}} {{vendor.state}}, {{vendor.pinCode}}
+                </p>
+            </div>
+            <div class="col-md-2" style="margin-top: 10px;">
+                <!-- <select class="form-control form-control-sm custom-input-style" [(ngModel)]="vendor.category">
+                    <option *ngFor="let category of categories" value="{{category}}">{{category}}</option>
+                </select> -->
+                +91{{vendor.phone}}
+            </div>
+            <div class="col-md-2" style="margin-top: 10px;">
+                <!-- <input class="form-control form-control-sm custom-input-style" type="text"
+                    [(ngModel)]="vendor.manufacturer"> -->
+                    {{vendor.email}}
+            </div>
+            <div class="col-md-2" style="margin-top: 10px;">
+                <!-- <input class="form-control form-control-sm custom-input-style" type="text"
+                    [(ngModel)]="vendor.unit"> -->
+                {{vendor.gstNo}}
+            </div>
+            <!-- <div class="col-md-1">
+                <input class="form-control form-control-sm custom-input-style" type="text"
+                    [(ngModel)]="vendor.mrp"> 
+                <h2>
+                    <span class="badge badge-success" style="padding: 10px 20px;"><b>100</b></span>
+                </h2>
+            </div> -->
+            <div class="col-md-2" style="margin-top: 10px;">
+                <span class="badge badge-pill" [ngClass]="{'badge-success':!isDueAmtInDanger(vendor.totalDueAmt),'badge-danger':isDueAmtInDanger(vendor.totalDueAmt)}" style="margin-right: 10px; font-size: 13px;">
+                    {{vendor.totalDueAmt}}
+                </span>
+            </div>
+            <div class="col-md-1" style="margin-top: 10px;">
+                <span class="badge badge-pill badge-light" style="border: 1px solid  rgb(23, 162, 184); margin-right: 5px;">
+                    <i class='fas fa-edit' style="color:  rgb(23, 162, 184);"></i>
+                </span>
+                <span class="badge badge-pill badge-light" style="border: 1px solid  rgb(23, 162, 184);">
+                    <i class='fas fa-angle-down' id="{{i}}_down"
+                        (click)="expandVendor(i)" style="color:  rgb(23, 162, 184);"></i>
+                    <i class='fas fa-angle-up' id="{{i}}_up"
+                        (click)="restoreVendor(i)" style="display: none; color:  rgb(23, 162, 184);"></i>
+                </span>
             </div>
         </div>
 
         <div id="{{i}}_content" class="row" style=" display: none; margin: 2% 1%;">
-
             <table class="table">
                 <thead class="bg-info">
                     <th>#</th>
-                    <th>Invoice Id</th>
-                    <th>Date</th>
-                    <th>GST</th>
-                    <th>Total</th>
-                    <th>Paid</th>
-                    <th>Unpaid</th>
+                    <th>Invoice No</th>
+                    <th>Invoice Date</th>
+                    <th>Total Amt</th>
+                    <th>Paid Amt</th>
+                    <th>Due Amt</th>
+                    <!-- <th>Qty</th>
+                    <th>In Stock</th>
+                    <th>Exp Date</th>
+                    <th>Mfg Date</th> -->
                 </thead>
                 <tbody>
-                    <tr *ngFor="let inventory of product.invoices; let i=index">
+                    <tr *ngFor="let purchaseOrder of vendor.invoices; let i=index">
                         <td>{{i+1}}</td>
-                        <td>{{inventory.invoiceId}}</td>
-                        <td>{{inventory.invoiceDate | date}}</td>
-                        <td><i class='fas fa-rupee-sign'></i>{{inventory.gst}}</td>
-                        <td><i class='fas fa-rupee-sign'></i>{{inventory.total}}</td>
-                        <td><i class='fas fa-rupee-sign'></i>{{inventory.paid}}</td>
-                        <td><i class='fas fa-rupee-sign'></i>{{inventory.total-inventory.paid}}</td>
+                        <td>{{purchaseOrder.invoiceId}}</td>
+                        <!-- <td><i class='fas fa-rupee-sign'></i>{{inventory.sellingPrice}}</td>
+                        <td><i class='fas fa-rupee-sign'></i>{{inventory.purchasedCost}}</td> -->
+                        <td>{{purchaseOrder.invoiceDate | date}}</td>
+                        <td>{{purchaseOrder.totalAmt}}</td>
+                        <td>{{purchaseOrder.paidAmt}}</td>
+                        <td>{{purchaseOrder.dueAmt}}</td>
+                        <!-- <td>{{inventory.expDate | date}}</td>
+                        <td>{{inventory.mfgDate | date}}</td> -->
                     </tr>
                 </tbody>
             </table>

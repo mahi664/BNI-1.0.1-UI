@@ -45,6 +45,12 @@ export class AddProductComponent implements OnInit {
         this.isLoading=false;
         this.categoryNamesList = response.sort();
         console.log(this.categoryNamesList.sort());
+      },
+      error=>{
+        this.isLoading=false;
+        this.alertService.showAlert("Something Went Wrong","ERROR");
+        setTimeout( () => this.alertService.hideAlert("ERROR"), 5000 );
+        console.log(error);
       }
     );
 
@@ -52,6 +58,12 @@ export class AddProductComponent implements OnInit {
       response => {
         this.gstRatesList = response;
         console.log(this.gstRatesList);
+      },
+      error=>{
+        this.isLoading=false;
+        this.alertService.showAlert("Something Went Wrong","ERROR");
+        setTimeout( () => this.alertService.hideAlert("ERROR"), 5000 );
+        console.log(error);
       }
     );
   }

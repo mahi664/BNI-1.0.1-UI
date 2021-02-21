@@ -1,17 +1,14 @@
+<app-alerts></app-alerts>
 <app-loading *ngIf="isLoading">{{ isLoading }}</app-loading>
 <div class="row">
     <div class="col-md-2" style="text-align: center;">
         <h5><b>Inventory</b></h5>
     </div>
     <div class="col-md-2" style="text-align: center;  ">
-        <select class="form-control form-control-sm custom-input-style">
-            <option>Category</option>
-        </select>
+        <input class="form-control form-control-sm custom-input-style" type="text" placeholder="Search By Category Name">
     </div>
     <div class="col-md-2" style="text-align: center;">
-        <select class="form-control form-control-sm custom-input-style">
-            <option>Product</option>
-        </select>
+        <input class="form-control form-control-sm custom-input-style" type="text" placeholder="Search By Product Name">
     </div>
     <div class="col-md-3" style="text-align: center;  ">
         <input class="form-control form-control-sm custom-input-style" type="text" placeholder="Quick Search">
@@ -24,31 +21,45 @@
     </div>
     <div class="col-md-1" style="text-align: right;">
         <span class="badge badge-pill badge-info"><i class='fas fa-info'></i></span>
-        <span class="badge badge-pill badge-info"><i class='fas fa-filter'></i></span>
+        <a (click)="displayFilter=!displayFilter">
+            <span class="badge badge-pill badge-info"><i class='fas fa-filter'></i></span>
+        </a>
+        
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-8">
+
+    </div>
+    <div class="col-md-4">
+        <div *ngIf="displayFilter" class="card" style="position: absolute; width: 100%; z-index: 1; 
+                    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
+            <div class="card-header">
+                <small>Filter Options:</small>
+            </div>
+            <div class="card-body">
+                <table class="table">
+                    <tr>
+                        <td><small>Category :</small></td>
+                        <td><input class="form-control form-control-sm custom-input-style" type="text" placeholder="Search By Category Name"></td>
+                    </tr>
+                    <tr>
+                        <td><small>Manufacturer :</small></td>
+                        <td><input class="form-control form-control-sm custom-input-style" type="text" placeholder="Search By Manufacturer Name"></td>
+                    </tr>
+                </table>
+                <div style="float: right;">
+                    <span class="badge badge-pill bg-info"><a href="#" style="text-decoration: none; color: white;">Apply
+                    </a></span>&nbsp;
+                    <span class="badge badge-pill bg-info"><a href="#"
+                            style="text-decoration: none; color: white;">Clear</a></span>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 
-<!-- <table class="table">
-    <thead class="bg-info">
-        <th>#</th>
-        <th>Product Name</th>
-        <th>Category</th>
-        <th>Manufacturer</th>
-        <th>Unit</th>
-        <th>MRP</th>
-        <th>Selling Price</th>
-        <th>Packaging</th>
-        <th>Stock</th>
-        <th></th>
-    </thead>
-    <tbody>
-        <tr *ngFor="let product of pageOfProducts; let i = index">
-            <td>
 
-            </td>
-        </tr>
-    </tbody>
-</table> -->
 <div class="row list-custom-headings bg-info">
     <div class="col-md-1">#</div>
     <div class="col-md-2">Product Name</div>
@@ -114,7 +125,7 @@
                 {{product.packaging}}
             </div>
             <div class="col-md-1">
-                <span class="badge badge-pill" [ngClass]="{'badge-success':!isStockInDanger(product),'badge-danger':isStockInDanger(product)}"  style="margin-right: 10px; font-size: 13px;">
+                <span class="badge badge-pill" [ngClass]="{'badge-success':stockStatus(product)==0,'badge-warning':stockStatus(product)==1,'badge-danger':stockStatus(product)==2}"  style="margin-right: 10px; font-size: 13px;">
                     {{!product.inStock?0:product.inStock}}
                 </span>
             </div>
@@ -156,8 +167,11 @@
                         <td>{{inventory.inStock}}</td>
                         <td>{{inventory.expDate | date}}</td>
                         <td>
-                            <span class="badge badge-pill badge-warning"  style="margin-right: 10px; font-size: 13px;">
-                                
+                            <span class="badge badge-pill badge-warning" *ngIf='inventory.expStatus==ABOUT_TO_EXPIRE'  style="margin-right: 10px; font-size: 13px;">
+                                {{inventory.expStatus}}
+                            </span>
+                            <span class="badge badge-pill badge-danger" *ngIf='inventory.expStatus==EXPIRED'  style="margin-right: 10px; font-size: 13px;">
+                                {{inventory.expStatus}}
                             </span>
                         </td>
                     </tr>
